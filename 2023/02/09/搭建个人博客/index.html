@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Valine.jpg">
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/comments_result.png">
 <meta property="article:published_time" content="2023-02-09T11:00:07.000Z">
-<meta property="article:modified_time" content="2023-02-09T15:38:45.420Z">
+<meta property="article:modified_time" content="2023-02-09T15:47:27.720Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Github">
@@ -389,8 +389,13 @@
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/fluid_slogan.png" srcset="/img/loading.gif" lazyload class="" title="slogan">
 
 <h1 id="添加评论功能"><a href="#添加评论功能" class="headerlink" title="添加评论功能"></a>添加评论功能</h1><h2 id="注册LeanCloud并创建应用"><a href="#注册LeanCloud并创建应用" class="headerlink" title="注册LeanCloud并创建应用"></a>注册LeanCloud并创建应用</h2><p>进入<a target="_blank" rel="noopener" href="https://console.leancloud.cn/">LeanCloud官网</a>注册账号，并完成实名认证和邮箱验证。</p>
-<h2 id="创建应用，选择“开发版”即可，进入该应用的“设置”-gt-“应用凭证”，找到AppID和AppKey，分别将其复制到下的文件中，"><a href="#创建应用，选择“开发版”即可，进入该应用的“设置”-gt-“应用凭证”，找到AppID和AppKey，分别将其复制到下的文件中，" class="headerlink" title="创建应用，选择“开发版”即可，进入该应用的“设置”-&gt;“应用凭证”，找到AppID和AppKey，分别将其复制到下的文件中，"></a>创建应用，选择“开发版”即可，进入该应用的“设置”-&gt;“应用凭证”，找到AppID和AppKey，分别将其复制到<span class="label label-primary">themes/fluid</span>下的<span class="label label-primary">_config.yml</span>文件中，<br><img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/LeanCloud.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud"></h2><img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/comments.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
-<p>–</p>
+<p>创建应用，选择“开发版”即可，进入该应用的“设置”-&gt;“应用凭证”，找到AppID和AppKey，分别将其复制到<span class="label label-primary">themes/fluid</span>下的<span class="label label-primary">_config.yml</span>文件中，</p>
+<img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/LeanCloud.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
+
+
+<img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/comments.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
+
+
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Valine.jpg" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
 
 <p>重新部署之后即可看到评论功能已开启</p>
@@ -406,7 +411,7 @@
 <p>按照提示一路回车即可</p>
 <p>打开<a target="_blank" rel="noopener" href="https://github.com/">Github</a>，在头像下方点击<span class="label label-primary">setting</span>，再点击<span class="label label-primary">SSH and GPG keys</span>，新建一个SSH，名称可以随便起，比如HEXO_DEPLOY</p>
 <p>打开上一步生成的SSH key，Windows中通常位于<span class="label label-primary">"User/.ssh/id_rsa.pub"</span>，将里面的内容复制到新建的SSH框中，点击确定保存</p>
-<p>在终端中输入”ssh -T <a href="mailto:&#103;&#105;&#116;&#x40;&#x67;&#105;&#116;&#104;&#x75;&#98;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#116;&#x40;&#x67;&#105;&#116;&#104;&#x75;&#98;&#46;&#x63;&#111;&#x6d;</a>“，如果如下图所示出现了个人的用户名，即代表连接成功</p>
+<p>在终端中输入”ssh -T <a href="mailto:&#103;&#105;&#116;&#x40;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#116;&#x40;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#111;&#x6d;</a>“，如果如下图所示出现了个人的用户名，即代表连接成功</p>
 <p>打开Hexo主目录下的<span class="label label-primary">_config.yml</span>文件，在最后一行修改部署的相关信息</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repository:</span> <span class="hljs-string">https://github.com/FansaOrz/FansaOrz.github.io</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br></code></pre></td></tr></table></figure>
 
