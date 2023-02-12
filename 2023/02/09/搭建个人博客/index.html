@@ -16,12 +16,12 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="环境搭建安装GitGit下载链接，Windows平台直接下载exe文件安装即可 Ubuntu平台使用指令安装 1sudo apt install git  安装NodeJSNodeJS下载链接，Hexo是基于NodeJS编写的，所以需要安装NodeJS和npm工具，Windows平台同样下载exe文件，安装即可。 安装完成后在cmd窗口查看是否安装成功，执行node -v查看NodeJS版本">
+    <meta name="description" content="使用Hexo在Github上搭建个人博客，相关主题的部署以及Hexo常用指令的介绍">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo+Github搭建个人博客">
 <meta property="og:url" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="环境搭建安装GitGit下载链接，Windows平台直接下载exe文件安装即可 Ubuntu平台使用指令安装 1sudo apt install git  安装NodeJSNodeJS下载链接，Hexo是基于NodeJS编写的，所以需要安装NodeJS和npm工具，Windows平台同样下载exe文件，安装即可。 安装完成后在cmd窗口查看是否安装成功，执行node -v查看NodeJS版本">
+<meta property="og:description" content="使用Hexo在Github上搭建个人博客，相关主题的部署以及Hexo常用指令的介绍">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/NodeJS_v.png">
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/npm_v.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Valine.jpg">
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/comments_result.png">
 <meta property="article:published_time" content="2023-02-09T11:00:07.000Z">
-<meta property="article:modified_time" content="2023-02-09T15:50:58.459Z">
+<meta property="article:modified_time" content="2023-02-12T02:16:14.354Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Github">
@@ -224,7 +224,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/dogs.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -264,7 +264,7 @@
         
         
         
-          23 分钟
+          22 分钟
         
       </span>
     
@@ -315,113 +315,102 @@
             
               <div class="markdown-body">
                 
-                <h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>Git下载<a target="_blank" rel="noopener" href="https://git-scm.com/">链接</a>，Windows平台直接下载exe文件安装即可</p>
+                <h1>环境搭建</h1>
+<h2 id="安装Git">安装Git</h2>
+<p>Git下载<a target="_blank" rel="noopener" href="https://git-scm.com/">链接</a>，Windows平台直接下载exe文件安装即可</p>
 <p>Ubuntu平台使用指令安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install git<br></code></pre></td></tr></table></figure>
-
-<h2 id="安装NodeJS"><a href="#安装NodeJS" class="headerlink" title="安装NodeJS"></a>安装NodeJS</h2><p>NodeJS下载<a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/download/">链接</a>，Hexo是基于NodeJS编写的，所以需要安装NodeJS和npm工具，Windows平台同样下载exe文件，安装即可。</p>
+<h2 id="安装NodeJS">安装NodeJS</h2>
+<p>NodeJS下载<a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/download/">链接</a>，Hexo是基于NodeJS编写的，所以需要安装NodeJS和npm工具，Windows平台同样下载exe文件，安装即可。</p>
 <p>安装完成后在cmd窗口查看是否安装成功，执行<span class="label label-primary">node -v</span>查看NodeJS版本</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/NodeJS_v.png" srcset="/img/loading.gif" lazyload class="" title="NodeJS版本">
-
 <p>执行<span class="label label-primary">npm -v</span>查看npm版本</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/npm_v.png" srcset="/img/loading.gif" lazyload class="" title="npm版本">
-
-<h2 id="Github仓库"><a href="#Github仓库" class="headerlink" title="Github仓库"></a>Github仓库</h2><p>在Github平台创建一个新仓库，仓库名格式必须为<span class="label label-primary">Github用户名.github.io</span></p>
+<h2 id="Github仓库">Github仓库</h2>
+<p>在Github平台创建一个新仓库，仓库名格式必须为<span class="label label-primary">Github用户名.github.io</span></p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Github_name.png" srcset="/img/loading.gif" lazyload class="" title="Github仓库名称">
-<p>此时仓库内容是空的，暂时不用管他，一般来说添加一个html文件就可以在<a href="https://fansaorz.github.io/">FansaOrz.github.io</a>上显示了</p>
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>Hexo是一个基于NodeJS的静态博客网站生成器，不需要进行开发，只需要编写MarkDown文本即可生成博客网站，Hexo官网<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">链接</a><br>通过以下指令进行Hexo的安装</p>
+<p>此时仓库内容是空的，暂时不用管他，一般来说添加一个html文件就可以在<a href="https://FansaOrz.github.io">FansaOrz.github.io</a>上显示了</p>
+<h2 id="安装Hexo">安装Hexo</h2>
+<p>Hexo是一个基于NodeJS的静态博客网站生成器，不需要进行开发，只需要编写MarkDown文本即可生成博客网站，Hexo官网<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">链接</a><br>
+通过以下指令进行Hexo的安装</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g hexo-cli<br></code></pre></td></tr></table></figure>
-
 <p>查看版本</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo -v<br></code></pre></td></tr></table></figure>
-
 <p>创建一个项目hexo-blog并初始化</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo init hexo-blog<br><span class="hljs-built_in">cd</span> hexo-blog<br>npm install<br></code></pre></td></tr></table></figure>
-
 <p>本地编译生成并启动</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo server<br></code></pre></td></tr></table></figure>
-
-<p>此时在浏览器中输入<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>即可看到Hexo的默认风格界面</p>
+<p>此时在浏览器中输入<a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a>即可看到Hexo的默认风格界面</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Hexo_default.png" srcset="/img/loading.gif" lazyload class="" title="Hexo默认风格">
-
-<h1 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h1><p>如果不喜欢Hexo的默认主题，可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/">官方的主题网站</a>中寻找自己喜欢的主题，此处介绍<span class="label label-primary">Fluid</span>主题的安装方法，读者也可以查看<a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid的Github链接</a>进行安装。</p>
-<h2 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h2><p>下载最新的<a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid/releases">release版本</a>，并解压到Hexo的themes目录，将解压后的文件夹重命名为<span class="label label-primary">fluid</span></p>
-<h2 id="指定主题"><a href="#指定主题" class="headerlink" title="指定主题"></a>指定主题</h2><p>修改Hexo主目录中的_config.yml文件</p>
+<h1>更换主题</h1>
+<p>如果不喜欢Hexo的默认主题，可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/">官方的主题网站</a>中寻找自己喜欢的主题，此处介绍<span class="label label-primary">Fluid</span>主题的安装方法，读者也可以查看<a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid的Github链接</a>进行安装。</p>
+<h2 id="安装主题">安装主题</h2>
+<p>下载最新的<a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid/releases">release版本</a>，并解压到Hexo的themes目录，将解压后的文件夹重命名为<span class="label label-primary">fluid</span></p>
+<h2 id="指定主题">指定主题</h2>
+<p>修改Hexo主目录中的_config.yml文件</p>
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">theme:</span> fluid  <span class="hljs-meta"># 指定主题</span><br><span class="hljs-symbol">language:</span> <span class="hljs-built_in">zh</span>-CN  <span class="hljs-meta"># 指定语言，会影响主题显示的语言，按需修改</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="创建”关于”页"><a href="#创建”关于”页" class="headerlink" title="创建”关于”页"></a>创建”关于”页</h2><p>刚刚下载的主题中，“关于”页面是没有的，需要自己创建，执行以下命令使用hexo创建一个新页面</p>
+<h2 id="创建-关于-页">创建&quot;关于&quot;页</h2>
+<p>刚刚下载的主题中，“关于”页面是没有的，需要自己创建，执行以下命令使用hexo创建一个新页面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
-
 <p>创建成功后，编辑博客目录下<span class="label label-primary">/source/about/index.md</span>，添加layout属性，修改后的文件应为：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">about</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020-02-23 19:20:33</span><br><span class="hljs-attr">layout:</span> <span class="hljs-string">about</span><br><span class="hljs-meta">---</span><br><span class="hljs-meta"></span><br><span class="hljs-string">这里写关于页的正文，支持</span> <span class="hljs-string">Markdown,</span> <span class="hljs-string">HTML</span><br></code></pre></td></tr></table></figure>
-
 <p>本地启动查看效果</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g -d<br>hexo s<br></code></pre></td></tr></table></figure>
-
-<p>浏览器同样访问<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>，可以看到Fluid主题风格的界面如下</p>
+<p>浏览器同样访问<a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a>，可以看到Fluid主题风格的界面如下</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Fluid_default.png" srcset="/img/loading.gif" lazyload class="" title="Fluid风格">
-
-<h1 id="创建文章"><a href="#创建文章" class="headerlink" title="创建文章"></a>创建文章</h1><p>修改Hexo目录下的_config.yml文件，设置<span class="label label-primary">post_asset_folder</span>为true，这是为了在生成文章时，自动生成一个同名的资源目录，用于存放图片文件</p>
+<h1>创建文章</h1>
+<p>修改Hexo目录下的_config.yml文件，设置<span class="label label-primary">post_asset_folder</span>为true，这是为了在生成文章时，自动生成一个同名的资源目录，用于存放图片文件</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">post_asset_folder:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
 <p>执行以下命令创建一篇新文章</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new post 测试文章<br></code></pre></td></tr></table></figure>
-
 <p>执行完成后在<span class="label label-primary">source\_post</span>路径中会生成一个测试文章.md文件和一个名为“测试文章”的文件夹（用于存放图片）</p>
-
 
 <p>此时可以在“测试文章”文件夹中放一张图片，以“testing.png”为例，此时在测试文章.md中可以输入以下内容，查看图片是否能正常引用，图片引用方法可以查看Hexo的<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/asset-folders.html">官网文档</a></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">测试文章</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2023-02-09 19:00:07</span><br><span class="hljs-attr">tags:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">测试tag</span><br><span class="hljs-attr">categories:</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">测试cat</span><br><span class="hljs-meta">---</span><br><span class="hljs-meta"></span><br><span class="hljs-string">这是一篇测试文章</span><br><br>&#123;<span class="hljs-string">%</span> <span class="hljs-string">asset_img</span> <span class="hljs-string">test.png</span> <span class="hljs-string">图片引用</span> <span class="hljs-string">%</span>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>本地启动</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g -d<br>hexo s<br></code></pre></td></tr></table></figure>
-
 <p>此时即可看到在测试文章中成功添加图片</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/testing_result.png" srcset="/img/loading.gif" lazyload class="" title="测试结果">
-
-<h1 id="个性化页面修改"><a href="#个性化页面修改" class="headerlink" title="个性化页面修改"></a>个性化页面修改</h1><h2 id="修改浏览器tab页的名称"><a href="#修改浏览器tab页的名称" class="headerlink" title="修改浏览器tab页的名称"></a>修改浏览器tab页的名称</h2><p>修改<span class="label label-primary">Hexo</span>主目录下的<span class="label label-primary">_config.yml</span>文件中的<span class="label label-primary">title</span>字段</p>
+<h1>个性化页面修改</h1>
+<h2 id="修改浏览器tab页的名称">修改浏览器tab页的名称</h2>
+<p>修改<span class="label label-primary">Hexo</span>主目录下的<span class="label label-primary">_config.yml</span>文件中的<span class="label label-primary">title</span>字段</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Hexo_title.png" srcset="/img/loading.gif" lazyload class="" title>
-
-<h2 id="修改博客标题"><a href="#修改博客标题" class="headerlink" title="修改博客标题"></a>修改博客标题</h2><p>修改<span class="label label-primary">themes/fluid</span>下<span class="label label-primary">_config.yml</span>文件中的<span class="label label-primary">blog_title</span>字段</p>
+<h2 id="修改博客标题">修改博客标题</h2>
+<p>修改<span class="label label-primary">themes/fluid</span>下<span class="label label-primary">_config.yml</span>文件中的<span class="label label-primary">blog_title</span>字段</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/fluid_title.png" srcset="/img/loading.gif" lazyload class="" title>
-
-<h2 id="修改主页正中间的文字"><a href="#修改主页正中间的文字" class="headerlink" title="修改主页正中间的文字"></a>修改主页正中间的文字</h2><p>修改<span class="label label-primary">themes/fluid</span>下<span class="label label-primary">_config.yml</span>文件中的<span class="label label-primary">text</span>字段</p>
+<h2 id="修改主页正中间的文字">修改主页正中间的文字</h2>
+<p>修改<span class="label label-primary">themes/fluid</span>下<span class="label label-primary">_config.yml</span>文件中的<span class="label label-primary">text</span>字段</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/fluid_slogan.png" srcset="/img/loading.gif" lazyload class="" title="slogan">
-
-<h1 id="添加评论功能"><a href="#添加评论功能" class="headerlink" title="添加评论功能"></a>添加评论功能</h1><h2 id="注册LeanCloud并创建应用"><a href="#注册LeanCloud并创建应用" class="headerlink" title="注册LeanCloud并创建应用"></a>注册LeanCloud并创建应用</h2><p>进入<a target="_blank" rel="noopener" href="https://console.leancloud.cn/">LeanCloud官网</a>注册账号，并完成实名认证和邮箱验证。</p>
+<h1>添加评论功能</h1>
+<h2 id="注册LeanCloud并创建应用">注册LeanCloud并创建应用</h2>
+<p>进入<a target="_blank" rel="noopener" href="https://console.leancloud.cn/">LeanCloud官网</a>注册账号，并完成实名认证和邮箱验证。</p>
 <p>创建应用，选择“开发版”即可，进入该应用的“设置”-&gt;“应用凭证”，找到AppID和AppKey，分别将其复制到<span class="label label-primary">themes/fluid</span>下的<span class="label label-primary">_config.yml</span>文件中，</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/LeanCloud.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
-
 <p>找到<span class="label label-primary">comments</span>，修改<span class="label label-primary">type</span>以及<span class="label label-primary">appId</span>、<span class="label label-primary">appKey</span></p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/comments.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
-
-
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/Valine.jpg" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
-
 <p>重新部署之后即可看到评论功能已开启</p>
 <img src="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/comments_result.png" srcset="/img/loading.gif" lazyload class="" title="LeanCloud">
-
-<h1 id="将Hexo部署到Github上"><a href="#将Hexo部署到Github上" class="headerlink" title="将Hexo部署到Github上"></a>将Hexo部署到Github上</h1><h2 id="连接Github与本地"><a href="#连接Github与本地" class="headerlink" title="连接Github与本地"></a>连接Github与本地</h2><p>右键打开Git bash，输入以下指令</p>
+<h1>将Hexo部署到Github上</h1>
+<h2 id="连接Github与本地">连接Github与本地</h2>
+<p>右键打开Git bash，输入以下指令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;FansaOrz&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;819096127@qq.com&quot;</span><br></code></pre></td></tr></table></figure>
-
 <p>用户名和邮箱根据自己的信息进行修改</p>
 <p>生成SSH key</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh-keygen -t rsa -C <span class="hljs-string">&quot;819096127@qq.com&quot;</span><br></code></pre></td></tr></table></figure>
-
 <p>按照提示一路回车即可</p>
 <p>打开<a target="_blank" rel="noopener" href="https://github.com/">Github</a>，在头像下方点击<span class="label label-primary">setting</span>，再点击<span class="label label-primary">SSH and GPG keys</span>，新建一个SSH，名称可以随便起，比如HEXO_DEPLOY</p>
 <p>打开上一步生成的SSH key，Windows中通常位于<span class="label label-primary">"User/.ssh/id_rsa.pub"</span>，将里面的内容复制到新建的SSH框中，点击确定保存</p>
-<p>在终端中输入”ssh -T <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#109;</a>“，如果如下图所示出现了个人的用户名，即代表连接成功</p>
+<p>在终端中输入&quot;ssh -T <a href="mailto:git@github.com">git@github.com</a>&quot;，如果如下图所示出现了个人的用户名，即代表连接成功</p>
 <p>打开Hexo主目录下的<span class="label label-primary">_config.yml</span>文件，在最后一行修改部署的相关信息</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repository:</span> <span class="hljs-string">https://github.com/FansaOrz/FansaOrz.github.io</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>首先安装Hexo的扩展hexo-deployer-git</p>
+<h2 id="发布文章">发布文章</h2>
+<p>首先安装Hexo的扩展hexo-deployer-git</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm i hexo-deployer-git<br></code></pre></td></tr></table></figure>
-
 <p>之后按照以下步骤实现静态页面的生成和部署</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 生成静态页面</span><br>hexo g<br><span class="hljs-comment"># 本地预览</span><br>hexo s<br><span class="hljs-comment"># 部署到Github</span><br>hexo d<br></code></pre></td></tr></table></figure>
+<h1>其他常见问题</h1>
 
-<h1 id="其他常见问题"><a href="#其他常见问题" class="headerlink" title="其他常见问题"></a>其他常见问题</h1>
                 
               </div>
             
@@ -515,9 +504,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/09/hello-world/" title="Hello World">
+                      <a href="/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/" title="SLAM算法工程师面经">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World</span>
+                        <span class="hidden-mobile">SLAM算法工程师面经</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
