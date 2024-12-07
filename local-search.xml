@@ -21,9 +21,27 @@
     <link href="/2024/12/07/2DGS%E8%AF%A6%E8%A7%A3/"/>
     <url>/2024/12/07/2DGS%E8%AF%A6%E8%A7%A3/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1>相关文档</h1><h2 id="2DGS">2DGS</h2><ul><li>项目链接：<a href="https://surfsplatting.github.io/">https://surfsplatting.github.io/</a></li><li>代码链接：<a href="https://github.com/hbb1/2d-gaussian-splatting">https://github.com/hbb1/2d-gaussian-splatting</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2403.17888">https://arxiv.org/pdf/2403.17888</a></li></ul><h1>TODO：</h1><h2 id="参考文档">参考文档</h2>]]></content>
     
     
+    <categories>
+      
+      <category>视觉重建</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>视觉重建</tag>
+      
+      <tag>论文解读</tag>
+      
+      <tag>机器学习</tag>
+      
+      <tag>MLP</tag>
+      
+    </tags>
     
   </entry>
   
