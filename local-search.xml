@@ -4,6 +4,32 @@
   
   
   <entry>
+    <title>CUDA编程基础</title>
+    <link href="/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"/>
+    <url>/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>2DGS详解</title>
+    <link href="/2024/12/07/2DGS%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2024/12/07/2DGS%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>NeRF详解</title>
     <link href="/2024/12/07/NeRF%E8%AF%A6%E8%A7%A3/"/>
     <url>/2024/12/07/NeRF%E8%AF%A6%E8%A7%A3/</url>
@@ -23,6 +49,10 @@
       <tag>视觉重建</tag>
       
       <tag>论文解读</tag>
+      
+      <tag>机器学习</tag>
+      
+      <tag>MLP</tag>
       
     </tags>
     
@@ -50,6 +80,39 @@
       <tag>视觉重建</tag>
       
       <tag>论文解读</tag>
+      
+      <tag>机器学习</tag>
+      
+      <tag>MLP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>机器学习相关基础概</title>
+    <link href="/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"/>
+    <url>/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</url>
+    
+    <content type="html"><![CDATA[<img src="/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/data_science.png" class="" title="data_science">]]></content>
+    
+    
+    <categories>
+      
+      <category>机器学习</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>机器学习</tag>
+      
+      <tag>基础知识</tag>
+      
+      <tag>数学</tag>
       
     </tags>
     
