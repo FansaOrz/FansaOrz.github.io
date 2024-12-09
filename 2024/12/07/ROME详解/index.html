@@ -16,17 +16,24 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Jiashi的个人博客">
+    <meta name="description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ROME详解">
 <meta property="og:url" content="https://fansaorz.github.io/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="Jiashi的个人博客">
+<meta property="og:description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/method.png">
 <meta property="article:published_time" content="2024-12-07T14:43:27.000Z">
-<meta property="article:modified_time" content="2024-12-07T14:43:27.639Z">
+<meta property="article:modified_time" content="2024-12-09T14:19:00.359Z">
 <meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="视觉重建">
+<meta property="article:tag" content="论文解读">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="MLP">
+<meta property="article:tag" content="计算机视觉">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/method.png">
   
   
   
@@ -41,6 +48,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -236,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          485 字
         
       </span>
     
@@ -247,7 +256,7 @@
         
         
         
-          1 分钟
+          5 分钟
         
       </span>
     
@@ -298,7 +307,40 @@
             
               <div class="markdown-body">
                 
-                
+                <h1>相关文档</h1>
+<ul>
+<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li>
+<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li>
+</ul>
+<h1>Introduction</h1>
+<ul>
+<li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li>
+<li>同时可以估计外参</li>
+<li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法
+<ul>
+<li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li>
+<li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li>
+</ul>
+</li>
+<li>因此 RoME 的方法是：
+<ul>
+<li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li>
+<li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li>
+</ul>
+</li>
+</ul>
+<h1>Approaches</h1>
+<p align="center"><img src="/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/method.png" srcset="/img/loading.gif" lazyload class="" title="method"></p>
+<ul>
+<li>主要分成三个部分，waypoints 采样、Mesh初始化和优化</li>
+<li>常用的术语和定义为：
+<ul>
+<li>3D point cloud：点云，包含了空间中的所有点，每个点都有对应的坐标和颜色信息</li>
+</ul>
+</li>
+</ul>
+<h2 id=""></h2>
+
                 
               </div>
             
@@ -306,6 +348,42 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
+      
+        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+      
+        <a href="/tags/MLP/">#MLP</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">#计算机视觉</a>
+      
+    </div>
   
 </div>
 
@@ -459,6 +537,11 @@
 
 
   
+
+
+  
+  
+
 
 
 

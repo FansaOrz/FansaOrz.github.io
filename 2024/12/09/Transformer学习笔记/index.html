@@ -16,21 +16,27 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Jiashi的个人博客">
+    <meta name="description" content="3D Gaussian Splatting for Real-Time Radiance Field Rendering. 对3D Gaussian Splatting的原理和代码进行详细解读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GausSurf学习笔记">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/07/GausSurf%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/index.html">
+<meta property="og:title" content="Transformer学习笔记">
+<meta property="og:url" content="https://fansaorz.github.io/2024/12/09/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="Jiashi的个人博客">
+<meta property="og:description" content="3D Gaussian Splatting for Real-Time Radiance Field Rendering. 对3D Gaussian Splatting的原理和代码进行详细解读">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-07T15:56:57.000Z">
-<meta property="article:modified_time" content="2024-12-08T01:03:09.406Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/09/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/pretraining.svg">
+<meta property="article:published_time" content="2024-12-09T14:19:30.000Z">
+<meta property="article:modified_time" content="2024-12-09T14:20:12.336Z">
 <meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="论文解读">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="计算机视觉">
+<meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/09/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/pretraining.svg">
   
   
   
-  <title>GausSurf学习笔记 - Jiashi Blog</title>
+  <title>Transformer学习笔记 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -41,6 +47,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -213,7 +221,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="GausSurf学习笔记"></span>
+            <span id="subtitle" data-typed-text="Transformer学习笔记"></span>
           
         </div>
 
@@ -224,8 +232,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-07 23:56" pubdate>
-          2024年12月7日 晚上
+        <time datetime="2024-12-09 22:19" pubdate>
+          2024年12月9日 晚上
         </time>
       </span>
     
@@ -236,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          1.7k 字
         
       </span>
     
@@ -247,7 +255,7 @@
         
         
         
-          1 分钟
+          14 分钟
         
       </span>
     
@@ -293,12 +301,105 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">GausSurf学习笔记</h1>
+            <h1 style="display: none">Transformer学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <h1>先验知识</h1>
+<h2 id="迁移学习">迁移学习</h2>
+<ul>
+<li>
+<p>迁移学习(Transfer Learning)是深度学习领域的一个重要研究方向。它通过利用已有模型的预训练参数来解决新任务的学习问题。</p>
+</li>
+<li>
+<p>预训练是一种从头开始训练模型的方式：所有的模型权重都被随机初始化，然后在没有任何先验知识的情况下开始训练：</p>
+</li>
+</ul>
+<p><img src="pretraining.svg" srcset="/img/loading.gif" lazyload alt=""></p>
+<ul>
+<li>
+<p>这个过程不仅需要海量的训练数据，而且时间和经济成本都非常高。因此大部分情况下，我们是将别人预训练好的模型权重通过迁移学习应用到自己的模型中，即使用自己的任务语料对模型进行“二次训练”，通过微调参数使得模型适用于新任务</p>
+</li>
+<li>
+<p>迁移学习的好处是：</p>
+<ul>
+<li>
+<p>预训练时模型很可能已经见过与任务类似的数据集，通过微调可以激发出模型在预训练过程中获得的知识，将基于海量数据获得的统计理解能力应用于我们的任务；</p>
+</li>
+<li>
+<p>由于模型已经在大量数据上进行过预训练，微调时只需要很少的数据量就可以达到不错的性能；</p>
+</li>
+<li>
+<p>在自己任务上获得优秀性能所需的时间和计算成本都可以很小。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>举例：我们可以选择一个在大规模英文语料上预训练好的模型，使用 arXiv 语料进行微调，以生成一个面向学术/研究领域的模型。这个微调的过程只需要很少的数据：我们相当于将预训练模型已经获得的知识“迁移”到了新的领域，因此被称为迁移学习。</p>
+</li>
+<li>
+<p><strong>在绝大部分情况下，我们都应该尝试找到一个尽可能接近我们任务的预训练模型，然后微调它，也就是所谓的“站在巨人的肩膀上”。</strong></p>
+</li>
+</ul>
+<h1>Transform 结构</h1>
+<ul>
+<li>标准的Transformer模型主要由两个模块构成：
+<ul>
+<li>编码器(Encoder)：负责理解输入文本，为每个输入构造对应的语义表示（语义特征）</li>
+<li>解码器(Decoder)：负责生成输出，使用Encoder输出的语义表示结合其他输入来生成目标序列</li>
+</ul>
+</li>
+</ul>
+<p>== 插图 ==</p>
+<ul>
+<li>
+<p>这两个模块可以根据任务的需求而单独使用：</p>
+<ul>
+<li>
+<p><strong>纯Encoder模型</strong>：适用于只需要理解输入语义的任务，例如：句子分类、命名实体识别；</p>
+</li>
+<li>
+<p><strong>纯Decoder模型</strong>：适用于生成式任务，例如文本生成</p>
+</li>
+<li>
+<p><strong>Encoder-Decoder 模型或 Seq2Seq 模型</strong>：适用于需要基于输入的生成式任务，例如翻译、摘要。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>原始结构</p>
+</li>
+<li>
+<p>Transformer 模型本来是为了翻译任务而设计的。在训练过程中，<strong>Encoder 接受源语言的句子作为输入</strong>，而 <strong>Decoder 则接受目标语言的翻译作为输入</strong>。</p>
+<ul>
+<li>在 Encoder 中，由于翻译一个词语需要依赖于上下文，因此注意力层可以访问句子中的所有词语；</li>
+<li>而 Decoder 是顺序地进行解码，在生成每个词语时，注意力层只能访问前面已经生成的单词。</li>
+</ul>
+</li>
+<li>
+<p>举例，假设翻译模型当前已经预测出了三个词语，我们会把这三个词语作为输入送入 Decoder，然后 Decoder 结合 Encoder 所有的源语言输入来预测第四个词语。</p>
+<pre><code class="hljs">  实际训练中为了加快速度，会把整个目标序列都送入Decoder，然后在注意力层中通过Mask遮盖掉未来的词语来防止信息泄露。
+</code></pre>
+</li>
+</ul>
+<p>== 插图 ==</p>
+<h1>注意力机制</h1>
+<h2 id="Attention">Attention</h2>
+<ul>
+<li>
+<p>NLP神经网络模型的本质就是对输入文本进行编码，常规的做法是首先对句子进行分词，然后将每个词语(token)都转化为对应的词向量（token embedding），这样文本就有转换为一个由词语向量组成的矩阵<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">X</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi mathvariant="bold-italic">x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi mathvariant="bold-italic">x</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi mathvariant="bold-italic">x</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\boldsymbol{X} = (\boldsymbol{x}_1, \boldsymbol{x}_2, \cdots, \boldsymbol{x}_n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.07778em;">X</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">x</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">x</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">x</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold-italic">x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\boldsymbol{x}_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5944em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol">x</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示第<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>个词语的词向量，维度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span>，故<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">X</mi></mrow><annotation encoding="application/x-tex">\boldsymbol{X}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.07778em;">X</span></span></span></span></span></span>的维度为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">X</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>n</mi><mo>×</mo><mi>d</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\boldsymbol{X} \in \mathbb{R}^{n \times d}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7252em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.07778em;">X</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">×</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span></span>。</p>
+</li>
+<li>
+<p>《Attention is All You Need》<strong>直接使用Attention机制编码整个文本</strong></p>
+</li>
+</ul>
+<h1>参考文档</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://transformers.run/c1/transformer/#transformer-%E7%9A%84%E7%BB%93%E6%9E%84">https://transformers.run/c1/transformer/#transformer-%E7%9A%84%E7%BB%93%E6%9E%84</a></li>
+<li><a target="_blank" rel="noopener" href="https://transformers.run/c1/attention/">https://transformers.run/c1/attention/</a></li>
+</ul>
+
                 
               </div>
             
@@ -306,6 +407,40 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">#计算机视觉</a>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
+      
+    </div>
   
 </div>
 
@@ -315,8 +450,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>GausSurf学习笔记</div>
-      <div>https://fansaorz.github.io/2024/12/07/GausSurf论文解读/</div>
+      <div>Transformer学习笔记</div>
+      <div>https://fansaorz.github.io/2024/12/09/Transformer学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -328,7 +463,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月7日</div>
+          <div>2024年12月9日</div>
         </div>
       
       
@@ -360,18 +495,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/09/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Transformer学习笔记">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Transformer学习笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/07/%E5%B8%B8%E8%A7%81%E5%87%A0%E4%BD%95%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="常见几何计算问题及代码实现">
-                        <span class="hidden-mobile">常见几何计算问题及代码实现</span>
+                      <a href="/2024/12/07/GausSurf%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" title="GausSurf学习笔记">
+                        <span class="hidden-mobile">GausSurf学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -459,6 +588,11 @@
 
 
   
+
+
+  
+  
+
 
 
 
