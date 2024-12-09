@@ -16,26 +16,28 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="介绍在Ubuntu系统中安装Docker的方法，以及在Docker中实现ROS程序的开发和运行">
+    <meta name="description" content="介绍如何利用Clash工具在Ubuntu系统中实现网络代理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker安装及使用">
-<meta property="og:url" content="https://fansaorz.github.io/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="Ubuntu系统中Clash的使用">
+<meta property="og:url" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="介绍在Ubuntu系统中安装Docker的方法，以及在Docker中实现ROS程序的开发和运行">
+<meta property="og:description" content="介绍如何利用Clash工具在Ubuntu系统中实现网络代理">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/docker_bash.png">
-<meta property="article:published_time" content="2023-02-12T14:44:05.000Z">
-<meta property="article:modified_time" content="2024-12-09T15:11:27.955Z">
+<meta property="og:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/clash.png">
+<meta property="og:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/razord.png">
+<meta property="og:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/proxy.png">
+<meta property="article:published_time" content="2023-02-16T04:51:47.000Z">
+<meta property="article:modified_time" content="2024-12-09T15:10:20.129Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="Ubuntu">
-<meta property="article:tag" content="docker">
-<meta property="article:tag" content="ROS">
+<meta property="article:tag" content="Clash">
+<meta property="article:tag" content="教程">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/docker_bash.png">
+<meta name="twitter:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/clash.png">
   
   
   
-  <title>docker安装及使用 - Jiashi Blog</title>
+  <title>Ubuntu系统中Clash的使用 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -218,7 +220,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="docker安装及使用"></span>
+            <span id="subtitle" data-typed-text="Ubuntu系统中Clash的使用"></span>
           
         </div>
 
@@ -229,8 +231,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-12 22:44" pubdate>
-          2023年2月12日 晚上
+        <time datetime="2023-02-16 12:51" pubdate>
+          2023年2月16日 下午
         </time>
       </span>
     
@@ -241,7 +243,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          351 字
         
       </span>
     
@@ -252,7 +254,7 @@
         
         
         
-          27 分钟
+          3 分钟
         
       </span>
     
@@ -298,69 +300,24 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">docker安装及使用</h1>
+            <h1 style="display: none">Ubuntu系统中Clash的使用</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>Docker安装</h1>
-<ul>
-<li>使用apt方式安装docker：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt install ca-certificates curl gnupg lsb-release<br></code></pre></td></tr></table></figure>
-<ul>
-<li>添加阿里云的软件源</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br></code></pre></td></tr></table></figure>
-<ul>
-<li>向sources.list添加Docker软件源</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="hljs-subst">$(lsb_release -cs)</span> stable&quot;</span> | sudo <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null<br></code></pre></td></tr></table></figure>
-<ul>
-<li>更新软件源，并安装Docker</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get update<br>sudo apt-get install docker-ce docker-ce-cli containerd.io<br></code></pre></td></tr></table></figure>
-<h1>Docker测试</h1>
-<h2 id="启动Docker">启动Docker</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> docker<br>sudo systemctl start docker<br></code></pre></td></tr></table></figure>
-<h2 id="建立Docker用户组">建立Docker用户组</h2>
-<p>将要使用Docker的用户添加到Docker的用户组，也就是默认的登录账户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 建立Docker组</span><br>sudo groupadd docker<br><span class="hljs-comment"># 将当前用户添加到Docker组中</span><br>sudo usermod -aG docker <span class="hljs-variable">$USER</span> <br></code></pre></td></tr></table></figure>
-<p>退出当前终端并重新登录（需要重启系统更新一下），进行如下测试</p>
-<h2 id="测试Docker是否正常安装">测试Docker是否正常安装</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> hello-world<br></code></pre></td></tr></table></figure>
-<p>如果出现一下信息，则说明安装成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">Unable to find image <span class="hljs-string">&#x27;hello-world:latest&#x27;</span> locally<br>latest: Pulling from library/hello-world<br>2db29710123e: Pull complete <br>Digest: sha256:6e8b6f026e0b9c419ea0fd02d3905dd0952ad1feea67543f525c73a0a790fefb<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> hello-world:latest<br><br>Hello from Docker!<br>This message shows that your installation appears to be working correctly.<br><br>To generate this message, Docker took the following steps:<br> 1. The Docker client contacted the Docker daemon.<br> 2. The Docker daemon pulled the <span class="hljs-string">&quot;hello-world&quot;</span> image from the Docker Hub.<br>    (amd64)<br> 3. The Docker daemon created a new container from that image <span class="hljs-built_in">which</span> runs the<br>    executable that produces the output you are currently reading.<br> 4. The Docker daemon streamed that output to the Docker client, <span class="hljs-built_in">which</span> sent it<br>    to your terminal.<br><br>To try something more ambitious, you can run an Ubuntu container with:<br> $ docker run -it ubuntu bash<br><br>Share images, automate workflows, and more with a free Docker ID:<br> https://hub.docker.com/<br><br>For more examples and ideas, visit:<br> https://docs.docker.com/get-started/<br></code></pre></td></tr></table></figure>
-<h1>Docker使用</h1>
-<h2 id="获取Docker镜像">获取Docker镜像</h2>
-<p><a target="_blank" rel="noopener" href="https://hub.docker.com/search?q=&amp;type=image">Docker Hub</a>上有大量的高质量镜像可以直接使用，此处以ROS的镜像为例。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 拉取镜像</span><br>docker pull osrf/ros:melodic-desktop-full<br></code></pre></td></tr></table></figure>
-<h2 id="Docker启动">Docker启动</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it osrf/ros:melodic-desktop-full<br></code></pre></td></tr></table></figure>
-<p>此时即启动了一个bash终端，允许用户进行交互</p>
-<img src="/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/docker_bash.png" srcset="/img/loading.gif" lazyload class="" title="figure">
-<h2 id="挂载主机目录">挂载主机目录</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用-v参数，如果本地目录不存在，则Docker会自动创建一个文件夹</span><br>docker run -it -v /home/jiashi/Src:/home/Src osrf/ros:melodic-desktop-full<br><br><span class="hljs-comment"># 使用--mount参数，如果本地目录不存在，Docker会报错（推荐）</span><br>docker run -it --mount <span class="hljs-built_in">type</span>=<span class="hljs-built_in">bind</span>,<span class="hljs-built_in">source</span>=/home/jiashi/Src/,target=/home/Src osrf/ros:melodic-desktop-full<br></code></pre></td></tr></table></figure>
-<h2 id="Docker网络配置">Docker网络配置</h2>
-<p>通常情况下不同终端进入同一个ROS容器时，之间的信息是不互通的，相当于两个ROS Master，可以在运行Docker时添加<span class="label label-primary">--network host</span>参数，实现Docker网络与本机互通。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it --network host osrf/ros:melodic-desktop-full<br></code></pre></td></tr></table></figure>
-<h2 id="ROS-Docker图形化界面配置">ROS Docker图形化界面配置</h2>
-<p><a target="_blank" rel="noopener" href="http://wiki.ros.org/docker/Tutorials/GUI#The_simple_way">参考链接</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it --<span class="hljs-built_in">env</span>=<span class="hljs-string">&quot;DISPLAY&quot;</span> --<span class="hljs-built_in">env</span>=<span class="hljs-string">&quot;QT_X11_NO_MITSHM=1&quot;</span> --volume=<span class="hljs-string">&quot;/tmp/.X11-unix:/tmp/.X11-unix:rw&quot;</span> osrf/ros:melodic-desktop-full<br><span class="hljs-built_in">export</span> containerId=$(docker ps -l -q)<br></code></pre></td></tr></table></figure>
-<p>此时通常会出现以下报错</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">No protocol specified<br>rqt: cannot connect to X server unix:0<br></code></pre></td></tr></table></figure>
-<p>再执行一下命令即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">xhost +<span class="hljs-built_in">local</span>:root <span class="hljs-comment"># for the lazy and reckless</span><br></code></pre></td></tr></table></figure>
-<h1>常见问题</h1>
-<h2 id="Docker容器无法Tab补全">Docker容器无法Tab补全</h2>
-<p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/21-nsuquklxusjiofr.html">参考文章</a><br>
-Docker中新增了<span class="label label-primary">/etc/apt/apt.conf.d/docker-clean</span>用于清除apt缓存来减小容器体积，因此需要删除该文件并重新安装<span class="label label-primary">bash-completion</span></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> etc/apt/apt.conf.d/docker-clean<br>sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list<br>apt update<br>apt install -y bash-completion vim<br>vim /etc/bash.bashrc<br></code></pre></td></tr></table></figure>
-<p>将该文件中35-41行取消注释</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># enable bash completion in interactive shells</span><br><span class="hljs-keyword">if</span> ! <span class="hljs-built_in">shopt</span> -oq posix; <span class="hljs-keyword">then</span><br>  <span class="hljs-keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="hljs-keyword">then</span><br>    . /usr/share/bash-completion/bash_completion<br>  <span class="hljs-keyword">elif</span> [ -f /etc/bash_completion ]; <span class="hljs-keyword">then</span><br>    . /etc/bash_completion<br>  <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> /etc/bash.bashrc<br></code></pre></td></tr></table></figure>
-<p>此时即可正常Tab补全</p>
+                <h1>Clash安装</h1>
+<p>在Clash的<a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash/releases">Github仓库</a>中找到最新的Release，下载到电脑中并解压</p>
+<img src="/2023/02/16/Ubuntu-Clash/clash.png" srcset="/img/loading.gif" lazyload class="" title="figure">
+<h1>下载配置文件</h1>
+<p>在对应的机场中下载配置文件，笔者此处使用的是<a target="_blank" rel="noopener" href="https://juzi20.com">桔子云</a>，将下载的配置文件修改名称为<span class="label label-primary">config.yaml</span>。下载<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/Dreamacro/maxmind-geoip@release/Country.mmdb">Country.mmdb</a>，将这两个文件放在~/.config/clash路径中</p>
 
+<h1>运行</h1>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/Softwares/clash<br><span class="hljs-built_in">chmod</span> 777 ./clash-linux-amd64-v3<br>./clash-linux-amd64-v3<br></code></pre></td></tr></table></figure>
+<p>在浏览器中打开<a target="_blank" rel="noopener" href="https://clash.razord.top">https://clash.razord.top</a>即可进入Clash的配置页面，可以实现修改节点，测试等功能</p>
+<img src="/2023/02/16/Ubuntu-Clash/razord.png" srcset="/img/loading.gif" lazyload class="" title="figure">
+<h1>全局配置</h1>
+<p>在Ubuntu的<span class="label label-primary">Setting->Network->Network Proxy</span>中修改配置为手动，具体参数如下图。此时即完成了网络代理的设置</p>
+<img src="/2023/02/16/Ubuntu-Clash/proxy.png" srcset="/img/loading.gif" lazyload class="" title="figure">
                 
               </div>
             
@@ -395,9 +352,9 @@ Docker中新增了<span class="label label-primary">/etc/apt/apt.conf.d/docker-c
       
         <a href="/tags/Ubuntu/">#Ubuntu</a>
       
-        <a href="/tags/docker/">#docker</a>
+        <a href="/tags/Clash/">#Clash</a>
       
-        <a href="/tags/ROS/">#ROS</a>
+        <a href="/tags/%E6%95%99%E7%A8%8B/">#教程</a>
       
     </div>
   
@@ -409,8 +366,8 @@ Docker中新增了<span class="label label-primary">/etc/apt/apt.conf.d/docker-c
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>docker安装及使用</div>
-      <div>https://fansaorz.github.io/2023/02/12/docker安装及使用/</div>
+      <div>Ubuntu系统中Clash的使用</div>
+      <div>https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/</div>
     </div>
     <div class="license-meta">
       
@@ -422,7 +379,7 @@ Docker中新增了<span class="label label-primary">/etc/apt/apt.conf.d/docker-c
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月12日</div>
+          <div>2023年2月16日</div>
         </div>
       
       
@@ -454,9 +411,9 @@ Docker中新增了<span class="label label-primary">/etc/apt/apt.conf.d/docker-c
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/16/Ubuntu-Clash/" title="Ubuntu系统中Clash的使用">
+                      <a href="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Ubuntu系统中Clash的使用</span>
+                        <span class="hidden-mobile">3D Gaussian Splatting学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -464,8 +421,8 @@ Docker中新增了<span class="label label-primary">/etc/apt/apt.conf.d/docker-c
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="机器学习相关基础概念">
-                        <span class="hidden-mobile">机器学习相关基础概念</span>
+                      <a href="/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" title="docker安装及使用">
+                        <span class="hidden-mobile">docker安装及使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
