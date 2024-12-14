@@ -19,16 +19,16 @@
     <meta name="description" content="Sigmoid激活函数不以零为中心，为什么会导致收敛变慢">
 <meta property="og:type" content="article">
 <meta property="og:title" content="激活函数不以零为中心的问题">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:url" content="https://fansaorz.github.io/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
 <meta property="og:description" content="Sigmoid激活函数不以零为中心，为什么会导致收敛变慢">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/cell.jpg">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/sigma-sigma-prime.jpg">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/tanh-tanh-prime.jpg">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/zig-zag-gradient.png">
-<meta property="article:published_time" content="2024-12-14T04:06:54.000Z">
-<meta property="article:modified_time" content="2024-12-14T04:30:58.213Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/cell.jpg">
+<meta property="og:image" content="https://fansaorz.github.io/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/sigma-sigma-prime.jpg">
+<meta property="og:image" content="https://fansaorz.github.io/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/tanh-tanh-prime.jpg">
+<meta property="og:image" content="https://fansaorz.github.io/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/zig-zag-gradient.png">
+<meta property="article:published_time" content="2024-08-17T04:06:54.000Z">
+<meta property="article:modified_time" content="2024-12-14T04:42:56.823Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="深度学习">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="神经网络">
 <meta property="article:tag" content="激活函数">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/cell.jpg">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/cell.jpg">
   
   
   
@@ -237,8 +237,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-14 12:06" pubdate>
-          2024年12月14日 中午
+        <time datetime="2024-08-17 12:06" pubdate>
+          2024年8月17日 中午
         </time>
       </span>
     
@@ -316,7 +316,7 @@
 <li>本文转载自<a target="_blank" rel="noopener" href="https://liam.page/2018/04/17/zero-centered-active-function/">谈谈激活函数以零为中心的问题</a>，<strong>非原创</strong></li>
 </ul>
 <h1>神经元</h1>
-<p align="center"><img src="/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/cell.jpg" srcset="/img/loading.gif" lazyload class="" title="神经元"></p>
+<p align="center"><img src="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/cell.jpg" srcset="/img/loading.gif" lazyload class="" title="神经元"></p>
 <ul>
 <li>该神经元整合前一层神经元的消息为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo stretchy="false">(</mo><mover accent="true"><mi>x</mi><mo>⃗</mo></mover><mo separator="true">,</mo><mover accent="true"><mi>w</mi><mo>⃗</mo></mover><mo separator="true">,</mo><mover accent="true"><mi>b</mi><mo>⃗</mo></mover><mo stretchy="false">)</mo><mo>=</mo><msub><mo>∑</mo><mi>i</mi></msub><mrow><msub><mi>w</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi></mrow></mrow><annotation encoding="application/x-tex">z(\vec{x}, \vec{w}, \vec{b}) = \sum_i{w_ix_i+b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2274em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mopen">(</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2077em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg xmlns="http://www.w3.org/2000/svg" width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
@@ -344,11 +344,11 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 </ul>
 <p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>σ</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\sigma(z) = \frac{1}{1+e^{-z}}
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0908em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6973em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p align="center"><img src="/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/sigma-sigma-prime.jpg" srcset="/img/loading.gif" lazyload class="" title="Sigmoid"></p>
+<p align="center"><img src="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/sigma-sigma-prime.jpg" srcset="/img/loading.gif" lazyload class="" title="Sigmoid"></p>
 <p>-tanh函数的一般形式为</p>
 <p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>t</mi><mi>a</mi><mi>n</mi><mi>h</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><msup><mi>e</mi><mi>z</mi></msup><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup></mrow><mrow><msup><mi>e</mi><mi>z</mi></msup><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">anh</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.2177em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4483em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5904em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6973em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7713em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p align="center"><img src="/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/tanh-tanh-prime.jpg" srcset="/img/loading.gif" lazyload class="" title="tanh"></p>
+<p align="center"><img src="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/tanh-tanh-prime.jpg" srcset="/img/loading.gif" lazyload class="" title="tanh"></p>
 <h1>收敛速度</h1>
 <ul>
 <li>模型的最优解即是模型参数的最优解，通过多轮迭代，模型参数会被更新到接近最优解，这一过程，迭代次数越多，收敛速度越慢；反之，迭代次数越少，收敛速度越快。</li>
@@ -409,7 +409,7 @@ x_j \cdot \frac{\partial L}{\partial f} \frac{\partial f}{\partial z}
 <ul>
 <li>因此每个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>更新方向，由此时的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的方向决定。假设当前情况下，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>变小合适，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">w_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>变大合适。但在Sigmoid函数中，输出值恒为正。也就是说<strong>如果上一级神经元采用Sigmoid函数作为激活函数，那么我们无法做到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">x_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>方向相反</strong>。此时模型为了收敛，只能Z字形逼近最优解</li>
 </ul>
-<p align="center"><img src="/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/zig-zag-gradient.png" srcset="/img/loading.gif" lazyload class="" title="收敛速度"></p>
+<p align="center"><img src="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/zig-zag-gradient.png" srcset="/img/loading.gif" lazyload class="" title="收敛速度"></p>
 
                 
               </div>
@@ -466,7 +466,7 @@ x_j \cdot \frac{\partial L}{\partial f} \frac{\partial f}{\partial z}
   <div class="license-box my-3">
     <div class="license-title">
       <div>激活函数不以零为中心的问题</div>
-      <div>https://fansaorz.github.io/2024/12/14/激活函数不以零为中心的问题/</div>
+      <div>https://fansaorz.github.io/2024/08/17/激活函数不以零为中心的问题/</div>
     </div>
     <div class="license-meta">
       
@@ -478,7 +478,7 @@ x_j \cdot \frac{\partial L}{\partial f} \frac{\partial f}{\partial z}
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月14日</div>
+          <div>2024年8月17日</div>
         </div>
       
       
@@ -510,12 +510,18 @@ x_j \cdot \frac{\partial L}{\partial f} \frac{\partial f}{\partial z}
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/08/18/%E4%B8%8B%E9%87%87%E6%A0%B7%E5%92%8C%E4%B8%8A%E9%87%87%E6%A0%B7/" title="下采样和上采样">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">下采样和上采样</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/09/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Transformer学习笔记">
-                        <span class="hidden-mobile">Transformer学习笔记</span>
+                      <a href="/2024/05/11/2DGS%E8%AF%A6%E8%A7%A3/" title="2DGS学习笔记">
+                        <span class="hidden-mobile">2DGS学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

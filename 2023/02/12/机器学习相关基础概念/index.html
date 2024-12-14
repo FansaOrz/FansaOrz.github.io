@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/Regression.png">
 <meta property="og:image" content="https://fansaorz.github.io/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/Clustering.png">
 <meta property="article:published_time" content="2023-02-12T13:24:43.000Z">
-<meta property="article:modified_time" content="2024-12-14T04:07:33.557Z">
+<meta property="article:modified_time" content="2024-12-14T04:36:40.402Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="MLP">
@@ -258,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          2.8k 字
         
       </span>
     
@@ -269,7 +269,7 @@
         
         
         
-          22 分钟
+          24 分钟
         
       </span>
     
@@ -412,7 +412,30 @@
 <p>Sigmoid的单数都是小于0.25的，那么在进行反向传播时，梯度相乘的结果会慢慢趋近于0。这样几乎就没有梯度信号通过神经元传递到前面层的梯度更新中，这个时候前面层的权重几乎没有更新，这就会造成<strong>梯度消失</strong>。</p>
 </li>
 <li>
-<p>dd</p>
+<p>输出不是零中心，所有神经元的w只能往一个方向走（一起变大或者一起变小，而不能一个变大一个变小），详细解释见：<a href="https://fansaorz.github.io/2024/12/14/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/">https://fansaorz.github.io/2024/12/14/激活函数不以零为中心的问题/</a></p>
+</li>
+<li>
+<p>指数函数计算消耗资源</p>
+</li>
+</ul>
+<h3 id="Tanh的优缺点">Tanh的优缺点</h3>
+<ul>
+<li>优点：解决了Sigmoid输出非零中心问题</li>
+<li>缺点：梯度消失问题依然存在</li>
+</ul>
+<h3 id="ReLU的优缺点">ReLU的优缺点</h3>
+<ul>
+<li>优点：
+<ul>
+<li>解决了梯度消失问题，至少x&gt;0时，神经元不会饱和</li>
+<li>计算速度快</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>不是零中心</li>
+<li>存在神经元死亡问题，当x&lt;0时，梯度为0</li>
+</ul>
 </li>
 </ul>
 <h1>无监督学习和监督学习</h1>

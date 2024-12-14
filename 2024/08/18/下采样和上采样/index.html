@@ -16,28 +16,26 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
+    <meta name="description" content="BN层介绍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ROME学习笔记">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="下采样和上采样">
+<meta property="og:url" content="https://fansaorz.github.io/2024/08/18/%E4%B8%8B%E9%87%87%E6%A0%B7%E5%92%8C%E4%B8%8A%E9%87%87%E6%A0%B7/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
+<meta property="og:description" content="BN层介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/method.png">
-<meta property="article:published_time" content="2024-12-07T14:43:27.000Z">
-<meta property="article:modified_time" content="2024-12-13T14:02:28.596Z">
+<meta property="article:published_time" content="2024-08-18T05:42:53.000Z">
+<meta property="article:modified_time" content="2024-12-14T08:38:18.083Z">
 <meta property="article:author" content="Jiashi Zhang">
-<meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="MLP">
-<meta property="article:tag" content="论文解读">
-<meta property="article:tag" content="计算机视觉">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="基础知识">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="神经网络">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/method.png">
   
   
   
-  <title>ROME学习笔记 - Jiashi Blog</title>
+  <title>下采样和上采样 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -222,7 +220,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ROME学习笔记"></span>
+            <span id="subtitle" data-typed-text="下采样和上采样"></span>
           
         </div>
 
@@ -233,8 +231,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-07 22:43" pubdate>
-          2024年12月7日 晚上
+        <time datetime="2024-08-18 13:42" pubdate>
+          2024年8月18日 下午
         </time>
       </span>
     
@@ -245,7 +243,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          485 字
+          36 字
         
       </span>
     
@@ -256,7 +254,7 @@
         
         
         
-          5 分钟
+          1 分钟
         
       </span>
     
@@ -302,44 +300,18 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ROME学习笔记</h1>
+            <h1 style="display: none">下采样和上采样</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>相关文档</h1>
+                <h1>下采样</h1>
+<h1>上采样</h1>
+<h1>参考文档</h1>
 <ul>
-<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li>
-<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gaotihong/article/details/79164172">反卷积和转置卷积</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34919792/article/details/102697817">关于上采样方法总结（插值和深度学习）</a></li>
 </ul>
-<h1>Introduction</h1>
-<ul>
-<li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li>
-<li>同时可以估计外参</li>
-<li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法
-<ul>
-<li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li>
-<li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li>
-</ul>
-</li>
-<li>因此 RoME 的方法是：
-<ul>
-<li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li>
-<li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li>
-</ul>
-</li>
-</ul>
-<h1>Approaches</h1>
-<p align="center"><img src="/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/method.png" srcset="/img/loading.gif" lazyload class="" title="method"></p>
-<ul>
-<li>主要分成三个部分，waypoints 采样、Mesh 初始化和优化</li>
-<li>常用的术语和定义为：
-<ul>
-<li>3D point cloud：点云，包含了空间中的所有点，每个点都有对应的坐标和颜色信息</li>
-</ul>
-</li>
-</ul>
-<h2 id=""></h2>
 
                 
               </div>
@@ -358,7 +330,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
   
   
 
@@ -373,15 +345,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
-      
         <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
       
-        <a href="/tags/MLP/">#MLP</a>
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
       
-        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
+        <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">#基础知识</a>
       
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">#计算机视觉</a>
+        <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
+      
+        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">#神经网络</a>
       
     </div>
   
@@ -393,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ROME学习笔记</div>
-      <div>https://fansaorz.github.io/2024/12/07/ROME详解/</div>
+      <div>下采样和上采样</div>
+      <div>https://fansaorz.github.io/2024/08/18/下采样和上采样/</div>
     </div>
     <div class="license-meta">
       
@@ -406,7 +378,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月7日</div>
+          <div>2024年8月18日</div>
         </div>
       
       
@@ -438,9 +410,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/07/%E5%B8%B8%E8%A7%81%E5%87%A0%E4%BD%95%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="常见几何计算问题及代码实现">
+                      <a href="/2024/08/18/Batch-Normalization%E4%BB%8B%E7%BB%8D/" title="Batch Normalization介绍">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">常见几何计算问题及代码实现</span>
+                        <span class="hidden-mobile">Batch Normalization介绍</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -448,8 +420,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="CUDA编程基础">
-                        <span class="hidden-mobile">CUDA编程基础</span>
+                      <a href="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/" title="激活函数不以零为中心的问题">
+                        <span class="hidden-mobile">激活函数不以零为中心的问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

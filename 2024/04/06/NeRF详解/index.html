@@ -16,29 +16,25 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="介绍基础的CUDA编程">
+    <meta name="description" content="对NeRF的原理和代码进行详细解读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CUDA编程基础">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="NeRF学习笔记">
+<meta property="og:url" content="https://fansaorz.github.io/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="介绍基础的CUDA编程">
+<meta property="og:description" content="对NeRF的原理和代码进行详细解读">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cpu_gpu.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cuda_model.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cuda_memory.png">
-<meta property="article:published_time" content="2024-12-07T14:27:06.000Z">
-<meta property="article:modified_time" content="2024-12-13T14:02:28.596Z">
+<meta property="article:published_time" content="2024-04-06T09:38:53.000Z">
+<meta property="article:modified_time" content="2024-12-14T04:44:21.913Z">
 <meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="CUDA">
-<meta property="article:tag" content="C++">
-<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="MLP">
+<meta property="article:tag" content="论文解读">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cpu_gpu.png">
   
   
   
-  <title>CUDA编程基础 - Jiashi Blog</title>
+  <title>NeRF学习笔记 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -223,7 +219,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CUDA编程基础"></span>
+            <span id="subtitle" data-typed-text="NeRF学习笔记"></span>
           
         </div>
 
@@ -234,8 +230,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-07 22:27" pubdate>
-          2024年12月7日 晚上
+        <time datetime="2024-04-06 17:38" pubdate>
+          2024年4月6日 下午
         </time>
       </span>
     
@@ -246,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          0 字
         
       </span>
     
@@ -257,7 +253,7 @@
         
         
         
-          17 分钟
+          1 分钟
         
       </span>
     
@@ -303,164 +299,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CUDA编程基础</h1>
+            <h1 style="display: none">NeRF学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>为什么要用 CUDA（GPU 和 CPU 的区别）</h1>
-<ul>
-<li>
-<p>与 CPU 相比，GPU（图形处理单元）拥有更多的处理单元（核心），这使得它能够并行处理大量的计算任务。CUDA 是 NVIDIA 推出的一种基于 GPU 进行通用计算的并行计算平台和编程模型。</p>
-</li>
-<li>
-<p>CPU 适合执行逻辑复杂、并行度低的任务</p>
-</li>
-<li>
-<p>GPU 适合执行逻辑简单、并行度高的任务</p>
-</li>
-<li>
-<p>以向量加法为例，它逻辑很简单（只需要把两个向量的对应位置加起来即可），且并行度极高（可以同时计算输出向量每个位置上的结果）</p>
-<ul>
-<li>
-<p>如果使用 CPU，需要依次计算输出向量每个位置的结果</p>
-</li>
-<li>
-<p>如果使用 GPU，我可以同时计算输出向量每个位置的结果，进而大大提高了速度。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="GPU-优点">GPU 优点</h2>
-<ul>
-<li>
-<p><strong>高并行性</strong>：GPU 包含成百上千个计算核心，能够并行处理大量数据，特别适合处理可以被并行化的计算任务（如矩阵运算、图像处理等）。</p>
-</li>
-<li>
-<p><strong>内存带宽</strong>：GPU 的内存带宽远高于 CPU，这使得它能够快速处理大规模数据。</p>
-</li>
-<li>
-<p><strong>高吞吐量</strong>：GPU 能够在同一时间处理更多的计算任务，从而提高吞吐量。</p>
-</li>
-</ul>
-<p align="center"><img src="/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cpu_gpu.png" srcset="/img/loading.gif" lazyload class="" title="cpu_gpu"></p>
-<h1>CUDA 编程模型</h1>
-<ul>
-<li>
-<p>在 CUDA 中，host 和 device 是两个重要的概念，host 是指 CPU 及其内存，device 是指 GPU 及其内存。CUDA 程序中既包含 host 程序，也包含 device 程序，他们分别在 CPU 和 GPU 上运行，同时互相之间可以通信。</p>
-</li>
-<li>
-<p>典型的 CUDA 程序执行流程如下：</p>
-<ol>
-<li>
-<p>分配 host 内存，并进行数据初始化</p>
-</li>
-<li>
-<p>分配 device 内存，并从 host 内存中拷贝数据到 device</p>
-</li>
-<li>
-<p>调用 CUDA 核函数在 device 上完成指定运算</p>
-</li>
-<li>
-<p>从 device 内存中拷贝数据到 host 内存</p>
-</li>
-<li>
-<p>释放 device 和 host 内存</p>
-</li>
-</ol>
-</li>
-<li>
-<p>上面流程中最重要的一个过程是<strong>调用 CUDA 的核函数来执行并行计算</strong>，kernel 是 CUDA 中一个重要的概念，是在 device 上线程中并行执行的函数，核函数用<strong>global</strong>符号声明，在调用时需要用&lt;&lt;&lt;grid, block&gt;&gt;&gt;来指定 kernel 要执行的线程数量。在 CUDA 中，每一个线程都要执行核函数，并且每个线程会分配一个唯一的线程号 thread ID，这个 ID 值可以通过核函数的内置变量 threadIdx 来获得。</p>
-</li>
-<li>
-<p>如何区分 host 和 device 上的代码呢？CUDA 中通过函数类型限定词来区分，主要的三和函数类型限定词如下：</p>
-<ul>
-<li>
-<p><strong>host</strong>：在 host 上运行，只能调用 host 函数，一般省略不写</p>
-</li>
-<li>
-<p><strong>device</strong>：在 device 上运行，只能调用 device 函数，不可以和<strong>global</strong>一起使用</p>
-</li>
-<li>
-<p><strong>global</strong>：在 device 上运行，从 host 中调用，返回类型必须是 void，不支持可变参数，不能成为类成员函数。</p>
-</li>
-</ul>
-</li>
-<li>
-<p>grid 和 block 又是什么含义呢？</p>
-<ul>
-<li>
-<p>kernel 在 device 上执行时实际上是启动很多县城，一个 kernel 启动的所有线程，成为一个网格(grid)，同一个 grid 上的线程共享相同的全局内存空间。</p>
-</li>
-<li>
-<p>grid 中包含很多块(block)，每个 block 中包含很多线程（thread）</p>
-</li>
-<li>
-<p>因此 kernel 的执行需要指定 grid 和 block 的数量，一般通过 dim3 来指定。</p>
-</li>
-</ul>
-</li>
-</ul>
-<p align="center"><img src="/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cuda_model.png" srcset="/img/loading.gif" lazyload class="" title="Kernel上的两层线程组织结构（2-dim）"></p>
-<ul>
-<li>
-<p>简单 CUDA 加法程序举例：</p>
-<ul>
-<li>
-<p>线程块大小为(16, 16)，然后将 N*N 大小的矩阵均分为不同的线程块来执行加法运算</p>
-</li>
-<li>
-<p>编译指令：nvcc -arch=sm_60 <a target="_blank" rel="noopener" href="http://test.cu">test.cu</a> -o test</p>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">// Kernel定义</span><br><span class="hljs-function">__global__ <span class="hljs-type">void</span> <span class="hljs-title">MatAdd</span><span class="hljs-params">(<span class="hljs-type">float</span> A[N][N], <span class="hljs-type">float</span> B[N][N], <span class="hljs-type">float</span> C[N][N])</span> </span>&#123;<br>    <span class="hljs-type">int</span> i = blockIdx.x * blockDim.x + threadIdx.x;<br>    <span class="hljs-type">int</span> j = blockIdx.y * blockDim.y + threadIdx.y;<br>    <span class="hljs-keyword">if</span> (i &lt; N &amp;&amp; j &lt; N)<br>        C[i][j] = A[i][j] + B[i][j];<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    ...<br>    <span class="hljs-comment">// Kernel 线程配置</span><br>    <span class="hljs-function">dim3 <span class="hljs-title">threadsPerBlock</span><span class="hljs-params">(<span class="hljs-number">16</span>, <span class="hljs-number">16</span>)</span></span>;<br>    <span class="hljs-function">dim3 <span class="hljs-title">numBlocks</span><span class="hljs-params">(N / threadsPerBlock.x, N / threadsPerBlock.y)</span></span>;<br>    <span class="hljs-comment">// kernel调用</span><br>    MatAdd&lt;&lt;&lt;numBlocks, threadsPerBlock&gt;&gt;&gt;(A, B, C);<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1>CUDA 内存</h1>
-<ul>
-<li>CUDA 内存层次结构图如下：</li>
-</ul>
-<p align="center"><img src="/2024/12/07/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/cuda_memory.png" srcset="/img/loading.gif" lazyload class="" title="CUDA内存模型"></p>
-<ul>
-<li>
-<p>全局内存(Global Memory):</p>
-<ul>
-<li>
-<p>全局内存是所有 GPU 上的线程都可以访问的内存，全局内存中存储了程序中所有的数据</p>
-</li>
-<li>
-<p>访问速度最慢，但是所有 GPU 线程都可以访问</p>
-</li>
-</ul>
-</li>
-<li>
-<p>共享内存(Shared Memory):</p>
-<ul>
-<li>
-<p>共享内存是每个<strong>线程块中所有线程</strong>都可以访问的内存</p>
-</li>
-<li>
-<p>访问速度介于全局内存和寄存器之间，但是只能被一个线程块中的所有线程访问</p>
-</li>
-</ul>
-</li>
-<li>
-<p>寄存器内存(Register Memory):</p>
-<ul>
-<li>每个线程有自己独立的寄存器内存，访问速度最快</li>
-</ul>
-</li>
-</ul>
-<h1>参考文档</h1>
-<ul>
-<li>
-<p><a target="_blank" rel="noopener" href="https://www.nvidia.cn/docs/IO/51635/NVIDIA_CUDA_Programming_Guide_1.1_chs.pdf">CUDA 编程指南</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34587739">CUDA 编程入门极简教程</a></p>
-</li>
-</ul>
-
+                
                 
               </div>
             
@@ -478,7 +322,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%BC%96%E7%A8%8B/" class="category-chain-item">编程</a>
+  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
   
   
 
@@ -493,13 +337,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
+      
         <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
       
-        <a href="/tags/CUDA/">#CUDA</a>
+        <a href="/tags/MLP/">#MLP</a>
       
-        <a href="/tags/C/">#C++</a>
-      
-        <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">#编程语言</a>
+        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
       
     </div>
   
@@ -511,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CUDA编程基础</div>
-      <div>https://fansaorz.github.io/2024/12/07/CUDA编程基础/</div>
+      <div>NeRF学习笔记</div>
+      <div>https://fansaorz.github.io/2024/04/06/NeRF详解/</div>
     </div>
     <div class="license-meta">
       
@@ -524,7 +368,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月7日</div>
+          <div>2024年4月6日</div>
         </div>
       
       
@@ -556,9 +400,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/07/ROME%E8%AF%A6%E8%A7%A3/" title="ROME学习笔记">
+                      <a href="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ROME学习笔记</span>
+                        <span class="hidden-mobile">3D Gaussian Splatting学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -566,8 +410,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/07/2DGS%E8%AF%A6%E8%A7%A3/" title="2DGS学习笔记">
-                        <span class="hidden-mobile">2DGS学习笔记</span>
+                      <a href="/2023/02/16/Ubuntu-Clash/" title="Ubuntu系统中Clash的使用">
+                        <span class="hidden-mobile">Ubuntu系统中Clash的使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

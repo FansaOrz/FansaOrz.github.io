@@ -19,22 +19,22 @@
     <meta name="description" content="3D Gaussian Splatting for Real-Time Radiance Field Rendering. 对3D Gaussian Splatting的原理和代码进行详细解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3D Gaussian Splatting学习笔记">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:url" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
 <meta property="og:description" content="3D Gaussian Splatting for Real-Time Radiance Field Rendering. 对3D Gaussian Splatting的原理和代码进行详细解读">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/nerf_3dgs.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/3d_viewing_trans.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/projection.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/orthographic_projection.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/persp_projection.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh_01.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/rasterization.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/thead.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/grid.png">
-<meta property="article:published_time" content="2024-12-07T05:59:38.000Z">
-<meta property="article:modified_time" content="2024-12-13T14:02:28.593Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/nerf_3dgs.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/3d_viewing_trans.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/projection.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/orthographic_projection.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/persp_projection.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh_01.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/rasterization.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/thead.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/grid.png">
+<meta property="article:published_time" content="2024-04-13T05:59:38.000Z">
+<meta property="article:modified_time" content="2024-12-14T04:43:43.948Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
@@ -42,7 +42,7 @@
 <meta property="article:tag" content="论文解读">
 <meta property="article:tag" content="计算机视觉">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/nerf_3dgs.png">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/nerf_3dgs.png">
   
   
   
@@ -242,8 +242,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-07 13:59" pubdate>
-          2024年12月7日 下午
+        <time datetime="2024-04-13 13:59" pubdate>
+          2024年4月13日 下午
         </time>
       </span>
     
@@ -330,7 +330,7 @@
 </li>
 </ul>
 <h1>NeRF 和 3DGS 的区别</h1>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/nerf_3dgs.png" srcset="/img/loading.gif" lazyload class="" title="nerf_3dgs"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/nerf_3dgs.png" srcset="/img/loading.gif" lazyload class="" title="nerf_3dgs"></p>
 <h1>什么是 Splatting</h1>
 <h2 id="定义">定义</h2>
 <ul>
@@ -519,7 +519,7 @@ l0,-144c-2,-159.3,-10,-310.7,-24,-454c-53.3,-528,-210,-949.7,
 <h1>Splatting 过程介绍——从 3D 到像素</h1>
 <h2 id="变换矩阵介绍">变换矩阵介绍</h2>
 <h3 id="观测变换">观测变换</h3>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/3d_viewing_trans.png" srcset="/img/loading.gif" lazyload class="" title="3d_viewing_trans"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/3d_viewing_trans.png" srcset="/img/loading.gif" lazyload class="" title="3d_viewing_trans"></p>
 <ul>
 <li>
 <p>从世界坐标系到相机坐标系，仿射变换</p>
@@ -540,7 +540,7 @@ l0,-144c-2,-159.3,-10,-310.7,-24,-454c-53.3,-528,-210,-949.7,
 <p>正交投影，和 Z 轴无关</p>
 </li>
 </ul>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/projection.png" srcset="/img/loading.gif" lazyload class="" title="projection"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/projection.png" srcset="/img/loading.gif" lazyload class="" title="projection"></p>
 <h4 id="正交投影">正交投影</h4>
 <ul>
 <li>
@@ -567,12 +567,12 @@ H403z M403 1759 V0 H319 V1759 v1200 v1759 h84z'/></svg></span></span></span><spa
 M347 1759 V0 H263 V1759 v1200 v1759 h84z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.65em;"><span class="pstrut" style="height:6.8em;"></span><span style="width:0.667em;height:4.800em;"><svg xmlns="http://www.w3.org/2000/svg" width='0.667em' height='4.800em' viewBox='0 0 667 4800'><path d='M403 1759 V84 H666 V0 H319 V1759 v1200 v1759 h347 v-84
 H403z M403 1759 V0 H319 V1759 v1200 v1759 h84z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mclose">)</span><span class="mord">/2</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span><span class="mord">/2</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mord">/2</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.65em;"><span class="pstrut" style="height:6.8em;"></span><span style="width:0.667em;height:4.800em;"><svg xmlns="http://www.w3.org/2000/svg" width='0.667em' height='4.800em' viewBox='0 0 667 4800'><path d='M347 1759 V0 H0 V84 H263 V1759 v1200 v1759 H0 v84 H347z
 M347 1759 V0 H263 V1759 v1200 v1759 h84z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/orthographic_projection.png" srcset="/img/loading.gif" lazyload class="" title="orthographic_projection"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/orthographic_projection.png" srcset="/img/loading.gif" lazyload class="" title="orthographic_projection"></p>
 <h4 id="透视投影">透视投影</h4>
 <ul>
 <li>有远小近大的原则，投影出来是一个锥体。因此需要先把锥体压成立方体，然后再进行正交投影</li>
 </ul>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/persp_projection.png" srcset="/img/loading.gif" lazyload class="" title="persp_projection"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/persp_projection.png" srcset="/img/loading.gif" lazyload class="" title="persp_projection"></p>
 <ul>
 <li>透视投影到立体的过程：</li>
 </ul>
@@ -761,7 +761,7 @@ H403z M403 1759 V0 H319 V1759 v0 v1759 h84z'/></svg></span></span></span><span c
 M347 1759 V0 H263 V1759 v0 v1759 h84z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
 <h2 id="3D-高斯球的颜色表示">3D 高斯球的颜色表示</h2>
 <p>这里是把高斯椭球的颜色表示成了一个颜色球，这个颜色球从不同角度观察，都可以看到不同的颜色。但是颜色球的颜色应该怎么描述呢？这里就是使用球谐函数来对其做近似，然后从不同角度对其做渲染</p>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh_01.png" srcset="/img/loading.gif" lazyload class="" title="sh_01"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh_01.png" srcset="/img/loading.gif" lazyload class="" title="sh_01"></p>
 <h3 id="球谐函数介绍">球谐函数介绍</h3>
 <ul>
 <li>
@@ -774,7 +774,7 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z'/></svg></span></span></span><span class="
 <p>其中，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span></span></span></span>表示当前的阶数，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>c</mi><mi>l</mi><mi>m</mi></msubsup></mrow><annotation encoding="application/x-tex">c_l^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9475em;vertical-align:-0.2831em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-2.4169em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2831em;"><span></span></span></span></span></span></span></span></span></span>是各项系数，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>y</mi><mi>l</mi><mi>m</mi></msubsup></mrow><annotation encoding="application/x-tex">y_l^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9475em;vertical-align:-0.2831em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-2.4169em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2831em;"><span></span></span></span></span></span></span></span></span></span>是基函数</p>
 </li>
 </ul>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh.png" srcset="/img/loading.gif" lazyload class="" title="sh"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/sh.png" srcset="/img/loading.gif" lazyload class="" title="sh"></p>
 <p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd class ="mtr-glue"></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≈</mo><munder><mo>∑</mo><mi>l</mi></munder><munderover><mo>∑</mo><mrow><mi>m</mi><mo>=</mo><mo>−</mo><mi>l</mi></mrow><mi>l</mi></munderover><msubsup><mi>c</mi><mi>l</mi><mi>m</mi></msubsup><msubsup><mi>y</mi><mi>l</mi><mi>m</mi></msubsup><mo stretchy="false">(</mo><mi>θ</mi><mo separator="true">,</mo><mi>ϕ</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd class ="mtr-glue"></mtd><mtd class ="mml-eqn-num"></mtd></mtr><mtr><mtd class ="mtr-glue"></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mo lspace="0em" rspace="0em">=</mo></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msubsup><mi>c</mi><mn>0</mn><mn>0</mn></msubsup><msubsup><mi>y</mi><mn>0</mn><mn>0</mn></msubsup><mo>+</mo></mrow></mstyle></mtd><mtd class ="mtr-glue"></mtd><mtd class ="mml-eqn-num"></mtd></mtr><mtr><mtd class ="mtr-glue"></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msubsup><mi>c</mi><mn>1</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><msubsup><mi>y</mi><mn>1</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>+</mo><msubsup><mi>c</mi><mn>1</mn><mn>0</mn></msubsup><msubsup><mi>y</mi><mn>1</mn><mn>0</mn></msubsup><mo>+</mo><msubsup><mi>c</mi><mn>1</mn><mn>1</mn></msubsup><msubsup><mi>y</mi><mn>1</mn><mn>1</mn></msubsup><mo>+</mo></mrow></mstyle></mtd><mtd class ="mtr-glue"></mtd><mtd class ="mml-eqn-num"></mtd></mtr><mtr><mtd class ="mtr-glue"></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msubsup><mi>c</mi><mn>2</mn><mrow><mo>−</mo><mn>2</mn></mrow></msubsup><msubsup><mi>y</mi><mn>2</mn><mrow><mo>−</mo><mn>2</mn></mrow></msubsup><mo>+</mo><msubsup><mi>c</mi><mn>2</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><msubsup><mi>y</mi><mn>2</mn><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>+</mo><msubsup><mi>c</mi><mn>2</mn><mn>0</mn></msubsup><msubsup><mi>y</mi><mn>2</mn><mn>0</mn></msubsup><mo>+</mo><msubsup><mi>c</mi><mn>2</mn><mn>1</mn></msubsup><msubsup><mi>y</mi><mn>2</mn><mn>1</mn></msubsup><mo>+</mo><msubsup><mi>c</mi><mn>2</mn><mn>2</mn></msubsup><msubsup><mi>y</mi><mn>2</mn><mn>2</mn></msubsup><mo>+</mo></mrow></mstyle></mtd><mtd class ="mtr-glue"></mtd><mtd class ="mml-eqn-num"></mtd></mtr><mtr><mtd class ="mtr-glue"></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow></mstyle></mtd><mtd class ="mtr-glue"></mtd><mtd class ="mml-eqn-num"></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{align}
 f(t) &amp;\approx \sum_l\sum^l_{m=-l}c_l^my_l^m(\theta, \phi) \\
 = &amp;c_0^0y_0^0 + \\
@@ -857,7 +857,7 @@ where: T_i = r^{-\sum_{j=1}^{i-1}\sigma_i\delta_j}
 <li>已添加注释到：<a target="_blank" rel="noopener" href="https://github.com/FansaOrz/gaussian-splatting">https://github.com/FansaOrz/gaussian-splatting</a></li>
 </ul>
 <h2 id="diff-gaussian-rasterization-解析">diff-gaussian-rasterization 解析</h2>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/rasterization.png" srcset="/img/loading.gif" lazyload class="" title="rasterization"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/rasterization.png" srcset="/img/loading.gif" lazyload class="" title="rasterization"></p>
 <h3 id="预处理">预处理</h3>
 <ul>
 <li>批量并行处理高斯点，为光栅化做准备</li>
@@ -866,11 +866,11 @@ where: T_i = r^{-\sum_{j=1}^{i-1}\sigma_i\delta_j}
 <ul>
 <li>每个线程中执行了以下步骤：</li>
 </ul>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/thead.png" srcset="/img/loading.gif" lazyload class="" title="thread"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/thead.png" srcset="/img/loading.gif" lazyload class="" title="thread"></p>
 <h4 id="剔除视锥外的点">剔除视锥外的点</h4>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function">__global__ <span class="hljs-type">void</span> <span class="hljs-title">preprocessCUDA</span><span class="hljs-params">(<span class="hljs-type">int</span> P, <span class="hljs-type">int</span> D, <span class="hljs-type">int</span> M,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-type">const</span> <span class="hljs-type">float</span>* orig_points,</span></span><br><span class="hljs-params"><span class="hljs-function">	<span class="hljs-type">const</span> glm::vec3* scales,</span></span><br><span class="hljs-params"><span class="hljs-function">    ...)</span> </span>&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="计算高斯核对应的-tile">计算高斯核对应的 tile</h4>
-<p align="center"><img src="/2024/12/07/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/grid.png" srcset="/img/loading.gif" lazyload class="" title="tile"></p>
+<p align="center"><img src="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/grid.png" srcset="/img/loading.gif" lazyload class="" title="tile"></p>
 <h1>其他</h1>
 <h2 id="名词解释：">名词解释：</h2>
 <ul>
@@ -965,7 +965,7 @@ where: T_i = r^{-\sum_{j=1}^{i-1}\sigma_i\delta_j}
   <div class="license-box my-3">
     <div class="license-title">
       <div>3D Gaussian Splatting学习笔记</div>
-      <div>https://fansaorz.github.io/2024/12/07/3D-Gaussian-Splatting详解/</div>
+      <div>https://fansaorz.github.io/2024/04/13/3D-Gaussian-Splatting详解/</div>
     </div>
     <div class="license-meta">
       
@@ -977,7 +977,7 @@ where: T_i = r^{-\sum_{j=1}^{i-1}\sigma_i\delta_j}
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月7日</div>
+          <div>2024年4月13日</div>
         </div>
       
       
@@ -1009,9 +1009,9 @@ where: T_i = r^{-\sum_{j=1}^{i-1}\sigma_i\delta_j}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/07/NeRF%E8%AF%A6%E8%A7%A3/" title="NeRF学习笔记">
+                      <a href="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/" title="ROME学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">NeRF学习笔记</span>
+                        <span class="hidden-mobile">ROME学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -1019,8 +1019,8 @@ where: T_i = r^{-\sum_{j=1}^{i-1}\sigma_i\delta_j}
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/16/Ubuntu-Clash/" title="Ubuntu系统中Clash的使用">
-                        <span class="hidden-mobile">Ubuntu系统中Clash的使用</span>
+                      <a href="/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/" title="NeRF学习笔记">
+                        <span class="hidden-mobile">NeRF学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
