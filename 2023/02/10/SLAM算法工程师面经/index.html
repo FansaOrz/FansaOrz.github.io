@@ -1,0 +1,1118 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jiashi Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录自己在2022年暑期实习和秋招过程中面试被问到的问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SLAM算法工程师面经">
+<meta property="og:url" content="https://fansaorz.github.io/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:site_name" content="Jiashi Blog">
+<meta property="og:description" content="记录自己在2022年暑期实习和秋招过程中面试被问到的问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fansaorz.github.io/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/AI_LAB_1.png">
+<meta property="og:image" content="https://fansaorz.github.io/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/tusimple_1.png">
+<meta property="og:image" content="https://fansaorz.github.io/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/tusimple_2.png">
+<meta property="article:published_time" content="2023-02-10T05:08:03.000Z">
+<meta property="article:modified_time" content="2024-12-13T14:02:28.598Z">
+<meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="秋招">
+<meta property="article:tag" content="实习">
+<meta property="article:tag" content="SLAM">
+<meta property="article:tag" content="面经">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fansaorz.github.io/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/AI_LAB_1.png">
+  
+  
+  
+  <title>SLAM算法工程师面经 - Jiashi Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fansaorz.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"F6F3aER7Bp312kQVxqaLhS8e-gzGzoHsz","app_key":"qGr8lKhZ4MUvmbRkeAmsdEtW","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jiashi Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/dogs.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SLAM算法工程师面经"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-10 13:08" pubdate>
+          2023年2月10日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          60 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SLAM算法工程师面经</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>暑期实习</h1>
+<h2 id="字节-AI-Lab">字节 AI Lab</h2>
+<h3 id="一面">一面</h3>
+<ol>
+<li>IMU 预积分解决了什么样的问题？为什么要加入预积分？预积分有什么作用？</li>
+<li>IMU 预积分和普通积分有什么区别</li>
+<li>FAST-LIO2 有没有用到预积分</li>
+<li>比赛中用的多少线的激光雷达，有没有试过 16 线激光雷达+FAST-LIO2</li>
+<li>FAST-LIO2 和 LIO-SAM 前端有什么区别</li>
+<li>FAST-LIO2 前端如果也加上特征提取的话和 LIOSAM 的效果会有什么样的差别</li>
+<li>LIOSAM 是如何解决特征退化的</li>
+<li>你们在做室内地图构建的时候有没有遇到走廊退化的问题，你们是怎么解决的</li>
+<li>比赛时为什么要用 UKF 解决机器人高频振动的定位问题<img src="/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/AI_LAB_1.png" srcset="/img/loading.gif" lazyload class="" title="AI_LAB">
+</li>
+</ol>
+<h3 id="二面">二面</h3>
+<p>面试官为非 SLAM 岗，所以没问技术细节，主要在了解项目和比赛内容</p>
+<h2 id="旷视">旷视</h2>
+<h3 id="自动驾驶一面">自动驾驶一面</h3>
+<p><strong>主要都是针对项目细节问的</strong></p>
+<ol>
+<li>介绍一下 UKF、iterated-KF</li>
+<li>图优化用的什么框架，g2o 和其他的框架比有什么区别</li>
+<li>Eigen 遇到过什么报错？有没有关于内存对齐的错误</li>
+<li>手撕：合并有序链表（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-sorted-lists/">Leetcode 21 题</a>）</li>
+</ol>
+<h3 id="研究院一面">研究院一面</h3>
+<ol>
+<li>向量内积和外积的几何含义</li>
+<li>UKF 的状态空间有啥，除了机器人的六维状态，还有没有三维的 feature</li>
+<li>手撕：给定平面中四个点，判断四个点能否形成正方形</li>
+</ol>
+<h2 id="图森">图森</h2>
+<h3 id="一面-2">一面</h3>
+<ol>
+<li>自我介绍、问简历里的项目</li>
+<li>紧耦合的 Lidar 和 IMU 中，IMU 是如何初始化的</li>
+<li>UKF 的具体实现步骤</li>
+<li>定位过程中是如何处理 IMU 的预测值和 odom 的预测值</li>
+<li>iterated-KF 是如何工作的</li>
+</ol>
+<h3 id="二面-2">二面</h3>
+<ol>
+<li>git 如何撤销 add 操作</li>
+<li>git 如何撤销 commit 操作</li>
+<li>fork 之后，如果原仓库更新了，如何更新本地的仓库</li>
+<li>C++资源管理 RAII</li>
+<li>C++11 中的移动语义</li>
+<li>手撕 1<img src="/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/tusimple_1.png" srcset="/img/loading.gif" lazyload class="" title="tusimple_1">
+</li>
+<li>手撕 2<img src="/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/tusimple_2.png" srcset="/img/loading.gif" lazyload class="" title="tusimple_2">
+</li>
+</ol>
+<h2 id="达摩院">达摩院</h2>
+<h3 id="一面-3">一面</h3>
+<ol>
+<li>你认为在本科到研究生期间，收获最大的项目或者比赛是什么？（并介绍）</li>
+<li>你在这个项目中遇到的最大的难点是什么</li>
+<li>你做的 LIO 前端为什么使用 IMU 的预积分，预积分和普通的积分比有什么区别</li>
+<li>你提到的 LOAM 算法，它的帧间匹配是如何实现的</li>
+<li>你在跨越险阻这个比赛中最大的贡献是什么？（并介绍）</li>
+<li>刚才提到的 NDT 和 ICP，介绍一下二者分别是如何实现点云匹配的</li>
+<li>一些比较基础的问题：姿态有哪几种表示形式？（四元数、欧拉角、旋转矩阵）分别有什么优缺点？欧拉角如何做插值？旋转矩阵转欧拉角是唯一解嘛？</li>
+</ol>
+<h3 id="二面（主管）">二面（主管）</h3>
+<ol>
+<li>问项目经历</li>
+<li>了解比赛内容及收获</li>
+<li>比赛准备过程中，意见不一致怎么处理的</li>
+<li>无技术细节、无笔试</li>
+</ol>
+<h3 id="三面（HR）">三面（HR）</h3>
+<ol>
+<li>你期望在这份实习中学到什么</li>
+<li>你怎么看待机器人和自动驾驶的前景</li>
+<li>以现在的技术和经验，你觉得自己会更适合去做自动驾驶还是机器人</li>
+<li>在团队中更倾向于什么角色</li>
+<li>团队中出现意见不一致的时候，你是如何解决的？举一个具体的例子</li>
+<li>说说你大学期间最 tough 的一段时间</li>
+<li>你有什么比别人好的学习方法嘛</li>
+<li>小蛮驴前段时间在郑州的大学中陷到水泥里面（是刚铺的水泥，还没干，只有一条细线作为标识），你会如何来分析这个问题</li>
+</ol>
+<h2 id="文远知行">文远知行</h2>
+<h3 id="一面-4">一面</h3>
+<ol>
+<li>给定 p1…pn 的点，用 RANSAC 如何拟合平面</li>
+<li>给定 p1…pn 的点，用最小二乘法如何拟合平面，写一下最小二乘法的方程以及如何求解</li>
+<li>给三个点，如何求平面方程</li>
+<li>说一下 LIO 的流程</li>
+<li>LIO 如何去除点云的畸变，用的 pose 是如何得来的</li>
+<li>使用预积分的目的</li>
+<li>写一下 IMU 预积分得到的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>R</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">Δ</mi><msub><mi>v</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">Δ</mi><msub><mi>p</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Delta R_{ij},\Delta v_{ij},\Delta p_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> 的形式</li>
+<li>说一下 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>R</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">Δ</mi><msub><mi>v</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">Δ</mi><msub><mi>p</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Delta R_{ij},\Delta v_{ij},\Delta p_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> 的几何意义</li>
+<li>多线程之间如何线程同步（举了一个例子，前端处理好的点云数据，后端如何知道处理好了并接受）（ROS Topic？）</li>
+<li></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> &#123;<br>   <span class="hljs-type">static</span> <span class="hljs-type">int</span> a_;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上述代码中静态变量如何赋值 11. shared_ptr 和 unique_ptr 的区别，以及 unique_ptr 如何赋值 12. 手撕：给定一个二维数组，判断其中 1 组成的块的个数（上下左右任意一个方向有相邻的 1 就组成一个块）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++">input:<br>std::vector&lt;std::vector&lt;<span class="hljs-type">bool</span>&gt;&gt; grid =<br>&#123; &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;,<br>  &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;,<br>  &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;,<br>  &#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125; &#125;;<br>output:<br><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+<h2 id="美团无人车">美团无人车</h2>
+<h3 id="一面-5">一面</h3>
+<ol>
+<li>聊项目</li>
+<li>IMU 预积分和普通积分有什么区别</li>
+<li>UKF 和 EKF 区别</li>
+<li>手撕：输入一个浮点类型的数据，输出它的平方根（二分或牛顿法）（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sqrtx/description/">LeetCode 69</a>）</li>
+</ol>
+<h3 id="二面-3">二面</h3>
+<ol>
+<li>IMU 的 bias 估计不准确会对预积分过程以及里程计估计有多大的影响</li>
+<li>IMU 预积分</li>
+<li>简要说明一下预积分的推导过程</li>
+<li>预积分的离散化是如何做的</li>
+<li>IMU 和 Lidar 的标定是如何实现的</li>
+<li>说一下 LIO-Mapping、LIO-SAM、FAST-LIO2、HDL 的优缺点</li>
+<li>ROS 的 Topic 这种机制有什么优点</li>
+<li>有没有接触过视觉和 GPS</li>
+<li>你所做的框架有没有想过在室外环境应如何修改</li>
+<li>说明一下 UKF 实现定位的过程</li>
+<li>C++11 中的 move 函数</li>
+<li></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> array[<span class="hljs-number">4</span>] = &#123; <span class="hljs-number">10</span>,<span class="hljs-number">10</span>,<span class="hljs-number">10</span>,<span class="hljs-number">10</span> &#125;;<br>cout &lt;&lt; *((<span class="hljs-type">double</span>*)array) &lt;&lt; endl; <span class="hljs-comment">// 输出什么信息</span><br></code></pre></td></tr></table></figure>
+<ol start="13">
+<li>手撕：删除链表的倒数第 N 个节点（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-nth-node-from-end-of-list/">LeetCode 19</a>）</li>
+</ol>
+<h2 id="元戎启行">元戎启行</h2>
+<h3 id="一面-6">一面</h3>
+<ol>
+<li>对于平面误匹配的情况，有没有遇到过，是如何解决的（鲁棒优化的方式：① 最大化共识，RANSAC 实现 ② 鲁棒核函数，M 估计）</li>
+<li>预积分对于优化的意义是什么</li>
+<li>预积分的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><msub><mi>R</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">Δ</mi><msub><mi>v</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">Δ</mi><msub><mi>p</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Delta R_{ij},\Delta v_{ij},\Delta p_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> 有没有几何意义</li>
+<li>FAST-LIO2 和 FAST-LIO 的区别（i-KD Tree 和对 ikf 的修改）</li>
+<li>在 UKF 定位中，由于 UKF 是针对当前时刻 IMU 进行预测，对于 Lidar 和 IMU 的时间不同步，是如何处理的？（可以参考一下 MSCKF）</li>
+</ol>
+<h3 id="二面-4">二面</h3>
+<ol>
+<li>C++11 智能指针</li>
+<li>C++11 左值引用</li>
+<li>C++11 move 函数有什么作用，为什么 C++11 要引入 move 函数</li>
+<li>讲一下 C++中 template</li>
+<li></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/*</span><br><span class="hljs-comment">在 c++ unordered_map的基础上，实现可以通过timestamp支持历史记录查询的功能,</span><br><span class="hljs-comment">具体解释如下：</span><br><span class="hljs-comment">假设我们设计了这样一个history_map:</span><br><span class="hljs-comment">当timestamp为5的时候，插入了key=1,value=1的键值对，</span><br><span class="hljs-comment">如果查询key=1时，第零秒到第四秒的value，应该返回找不到；</span><br><span class="hljs-comment">如果查询五秒和以后的value，应该返回1。</span><br><span class="hljs-comment">同样的，如果在第10秒把key=1对应的value更新为2,</span><br><span class="hljs-comment">那么第0-4秒，key=1的value不存在，第5-9秒</span><br><span class="hljs-comment">key=1时value应该为1，10秒及以后，key=1的value变成2了。</span><br><span class="hljs-comment">请实现这样一种history_map.</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-comment">// 参考接口， 可按需修改</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">GetCurrentTime</span><span class="hljs-params">()</span></span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">HistoryMap</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    unordered_map&lt;<span class="hljs-type">int</span>, vector&lt;pair&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, <span class="hljs-type">int</span>&gt;&gt;&gt; map; <span class="hljs-comment">// &lt;key,&lt;&lt;start,end&gt;,value&gt;&gt;</span><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">Get</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">int</span>* value)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (!map.<span class="hljs-built_in">count</span>(key)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">auto</span> hisValue = map[key];<br>        value = hisValue[hisValue.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>].second; <span class="hljs-comment">// 返回最新时刻value</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Set</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">int</span> value)</span> </span>&#123;<br>        <span class="hljs-type">int</span> currentTime = <span class="hljs-built_in">GetCurrentTime</span>();<br>        <span class="hljs-keyword">if</span> (!map.<span class="hljs-built_in">count</span>(key)) &#123; <span class="hljs-comment">// 新key</span><br>            vector&lt;pair&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, <span class="hljs-type">int</span>&gt;&gt; tempValue;<br>            vector.<span class="hljs-built_in">push_back</span>(pair&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, <span class="hljs-type">int</span>&gt;((currentTime, currentTime + <span class="hljs-number">1</span>), value)); <span class="hljs-comment">// 未知结束时间</span><br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">auto</span> hisValue = map[key];<br>            hisValue[hisValue.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>].first.second = currentTime; <span class="hljs-comment">// 更新上一个结束时间</span><br>            hisValue.<span class="hljs-built_in">push_back</span>(pair&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, <span class="hljs-type">int</span>&gt;((currentTime, currentTime + <span class="hljs-number">1</span>), value)); <span class="hljs-comment">// 添加新值</span><br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">GetByTime</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">long</span> timestamp, <span class="hljs-type">int</span>* value)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (!map.<span class="hljs-built_in">count</span>(key)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> eachHisValue : map[key]) &#123;<br>            <span class="hljs-keyword">if</span> (timestamp &gt; eachHisValue.first.first &amp;&amp; timestamp &lt; eachHisValue.first.second) &#123;<br>                value = eachHisValue.second;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">auto</span> hisValue = map[key];<br>        <span class="hljs-keyword">if</span> (timestamp &gt; hisValue[hisValue.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>].first.first) &#123; <span class="hljs-comment">// 最后一个时间单独判断</span><br>            value = hisValue[hisValue.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>].second;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="三面">三面</h3>
+<ol>
+<li>自我介绍、问项目</li>
+<li>表示旋转的三种方法，各有什么优缺点</li>
+<li>求解 $ \frac{\partial R_1R_2}{\partial R_2} $</li>
+</ol>
+<h2 id="智加科技">智加科技</h2>
+<h3 id="一面-7">一面</h3>
+<ol>
+<li>ROS 中消息传输的机制</li>
+<li>ROS 中消息的时间同步</li>
+<li>项目</li>
+<li>用过什么 C++中的容器（vector queue map unordered_map）</li>
+<li>map 和 unordered_map 内部分别用什么实现的</li>
+<li>模板实例化是在编译期还是在执行期</li>
+<li>智能指针有什么作用</li>
+<li>手撕：写一个快排</li>
+<li>手撕：给两组二维坐标序列，分别代表左右两条车道线，计算车道线的中线的点序（左右点的数量不一样长）</li>
+</ol>
+<h1>秋招</h1>
+<h2 id="蔚来">蔚来</h2>
+<h3 id="一面-8">一面</h3>
+<ol>
+<li>实验室项目</li>
+<li>实习项目</li>
+<li>无专业知识无八股</li>
+<li>手撕：nums=[3,2,1,0,4]，代表每个下标可以跳跃的距离，起始位置在 idx=0，问判断能不能跳跃到最后一个下标（动态规划），说一下实现的时间复杂度和空间复杂度</li>
+<li>反问：蔚来自动驾驶部门主要是在北京，目标做 L4，目前地图定位组有 80 个人，作息 10:30-21:30</li>
+</ol>
+<h3 id="二面-5">二面</h3>
+<ol>
+<li>实验室项目</li>
+<li>实习项目</li>
+<li>无专业知识无八股</li>
+<li>手撕：输入一个字符串，输出其计算结果，例如输入&quot;0+3-2-5*6&quot;， 输出-29</li>
+<li>面试官是做机器学习构建高精地图的，生成车道线、路口等</li>
+</ol>
+<h3 id="三面-2">三面</h3>
+<ol>
+<li>手撕：K-Means，不咋了解机制，换一个：01 矩阵，找最大的相邻的 1 的面积</li>
+<li>九十月份能不能先过去实习</li>
+<li>bfs 和 dfs 的区别</li>
+<li>fast-lio2 和 liosam 的区别，在哪些场景下效果会更好</li>
+<li>g2o 和 gtsam 之间的区别（没用过 gtsam，不太清楚）</li>
+<li>fast-lio2 迭代次数一般设置多大（经验来看，没改过迭代次数，不过说了一下程序判断跳出迭代的条件）</li>
+<li>意向工作地点，上海能不能接受</li>
+</ol>
+<h2 id="速腾聚创">速腾聚创</h2>
+<h3 id="一面-9">一面</h3>
+<ol>
+<li>聊项目，无专业知识，无八股</li>
+<li>团队规模做 SLAM 的五六个人，今年要扩招，往机器人公司探索，做一些自动泊车这种</li>
+</ol>
+<h3 id="二面-6">二面</h3>
+<ol>
+<li>聊项目，无专业知识，无八股</li>
+<li>数学题：<br>
+AB+CD+EF+GH = III，每个字母对应 0-9 一个数字，问哪个数字没被用到</li>
+<li>反问：<br>
+今年团队规模要扩大，再招十来个做 SLAM 的</li>
+</ol>
+<h3 id="三面-3">三面</h3>
+<ol>
+<li>聊天</li>
+</ol>
+<h2 id="航天科技创新研究院-HR-综合面">航天科技创新研究院-HR 综合面</h2>
+<ol>
+<li>自我介绍</li>
+<li>科研结果怎样产业化，自己的看法</li>
+<li>比赛中收获最大的是什么时候</li>
+<li>为什么一直参加比赛</li>
+<li>为什么选择来研究所</li>
+</ol>
+<h2 id="美团无人配送">美团无人配送</h2>
+<h3 id="一面-10">一面</h3>
+<ol>
+<li>面试官是做规划控制的，不知道为啥把我捞起来了，离谱</li>
+<li>没啥好聊的，就聊项目</li>
+<li>手撕：编辑距离，没做出来（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/edit-distance/">LeetCode 72</a>）</li>
+<li>八股：深拷贝和浅拷贝的区别</li>
+</ol>
+<h3 id="定位组一面">定位组一面</h3>
+<ol>
+<li>自我介绍 聊项目</li>
+<li>无八股</li>
+<li>手撕：计算根号 2，循环在 50 次以内（直接二分）</li>
+<li>反问：定位建图规模在大几十人，具体数字不方便透露，以公开道路无人配送为主，近期不考虑做卡车</li>
+</ol>
+<h3 id="定位组二面">定位组二面</h3>
+<ol>
+<li>项目</li>
+<li>无八股 无手撕</li>
+</ol>
+<h3 id="定位组三面">定位组三面</h3>
+<ol>
+<li>机器人和自动驾驶，未来会更倾向于哪个方向</li>
+<li>未来的职业发展规划，选择建图或者是定位</li>
+<li>实验室做的项目、比赛或者实习期间遇到的难点，是怎么解决的</li>
+<li>三个词形容一下自己，并分别举个例子</li>
+<li>现在获取新的知识的方式有哪些</li>
+<li>现在面了哪些公司，收到了哪些意向书，你会如何排序选择</li>
+<li>会根据项目问一下项目有多少人，都是怎么分工的</li>
+<li>实验室期间有没有发论文</li>
+<li>在实验室期间主要以参加比赛为主还是做项目搞科研为主</li>
+</ol>
+<h2 id="擎朗智能">擎朗智能</h2>
+<h3 id="一面-11">一面</h3>
+<ol>
+<li>自我介绍</li>
+<li>项目</li>
+<li>UKF 实现定位</li>
+<li>运动规划里可以怎么用图优化（TEB）</li>
+<li>牛顿法、高斯牛顿法、梯度下降法</li>
+<li>new 和 malloc 区别</li>
+<li>多态</li>
+<li>static 关键字</li>
+<li>AMCL 和 MCL 区别、GMAPPING 原理</li>
+</ol>
+<h3 id="二面（两个人一起面试）">二面（两个人一起面试）</h3>
+<ol>
+<li>自我介绍（大概二十多分钟，做了一个 PPT）</li>
+<li>问项目和细节</li>
+<li>滤波的五个步骤</li>
+<li>梯度下降、牛顿法、高斯牛顿法区别，梯度下降法局限性</li>
+<li>超多八股：介绍多态、介绍 stl 容器、map 和 unordered map、用过的设计模式（只知道单例模式）、智能指针、C++的内存结构</li>
+</ol>
+<h2 id="智加科技-2">智加科技</h2>
+<h3 id="一面-12">一面</h3>
+<ol>
+<li>项目</li>
+<li>介绍 IMU 预积分（好久没看了，讲的不太清楚）</li>
+<li>手撕：寻找第 K 大（快排）（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/xx4gT2/">LeetCode 剑指 Offer 76</a>）</li>
+<li>开放性问题： 在做融合的时候要怎么设计各个传感器的方差</li>
+<li>如何判断 lidar 在三个轴上匹配的置信度</li>
+<li>点云的 PCA（主成分分析）特征值和特征向量对点云来说有什么物理含义</li>
+</ol>
+<h3 id="二面-7">二面</h3>
+<ol>
+<li>项目</li>
+<li>问了很多达摩院这边的工作</li>
+<li>C++调试工具 gdb</li>
+<li>进程和线程的区别</li>
+<li>手撕 1：写一个二分（面试官很惊讶，一面居然出了寻找第 K 大这么难的题）</li>
+<li>手撕 2：栈的压入、弹出（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/">LeetCode 剑指 Offer 31</a>）</li>
+<li>反问：北京建图定位规模七八人</li>
+</ol>
+<h3 id="三面-4">三面</h3>
+<ol>
+<li>项目</li>
+<li>开放问题：对于高速加隧道这种场景，你可以怎么设计定位的模块</li>
+<li>开放问题：SLAM 分为哪几个部分，分别是干啥的</li>
+<li>进程和线程、进程之间如何通信、ROS 有没有遇到什么 bug、引用传参好处、</li>
+<li>手撕：反转链表（要怎么设计验证数据 （<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/fan-zhuan-lian-biao-lcof/">LeetCode 剑指 Offer 24</a>）</li>
+<li>手撕：设计 LFU（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lfu-cache/">LeetCode 460</a>）</li>
+</ol>
+<h2 id="华为">华为</h2>
+<h3 id="一面-13">一面</h3>
+<ol>
+<li>项目</li>
+<li>手撕：给定一个字符串 s，根据字符出现的频率，对其进行降序排序，例如：“tree”，输出&quot;eert&quot;，e 出现了两次，排在前面，r 和 t 各出现一次，任意顺序都 ok（共享屏幕在本地 IDE 做，限时 15min）</li>
+<li>笔试复盘：描述一道笔试题</li>
+<li>北京上海两地办公</li>
+</ol>
+<h3 id="二面-8">二面</h3>
+<ol>
+<li>项目</li>
+<li>开放问题：如果机器人是坐电梯上到二楼，那么 LIO 会出现什么问题，该如何解决<br>
+（紧耦合会出现比较大问题，LIDAR 残差和 IMU 残差不一致。解决方案：IMU 零速区间检测？不太懂）</li>
+<li>开放问题：目前根据 hd map、车道线定位、RTK 已经能实现比较好的定位，那 SLAM 在无人车的定位里面主要优势是什么<br>
+（就是在没有车道线和阴天 rtk 信息不好的时候发挥作用？）</li>
+<li>开放问题：高精地图在自动驾驶里面比较大的问题在哪？可以如何解决？<br>
+（高精地图体量太大，可以把高精地图分块，每次只加载附近区域的地图块；可以对高精地图进行压缩，提前进行地图压缩，加快地图加载速度）</li>
+<li>手撕：01 矩阵寻找岛屿数量</li>
+</ol>
+<h3 id="三面-5">三面</h3>
+<ol>
+<li>聊天</li>
+</ol>
+<h2 id="仙途">仙途</h2>
+<h3 id="一面-14">一面</h3>
+<ol>
+<li>聊项目</li>
+<li>八股：常用的 STL 容器</li>
+<li>vector 的内存管理，是如何做到动态分配的</li>
+<li>deque 如何实现前端和后端插入删除复杂度都是 O1</li>
+<li>unordered map 底层是用什么实现的</li>
+<li>如果要实现一个哈希表，要怎么做</li>
+<li>常用的优化算法</li>
+<li>如果图优化中有 10 个顶点，3 条平面边，一条里程计边，那算出来的雅可比矩阵是什么样的</li>
+<li>手撕：给一个排好序的数组，把他转换成任意无序的状态</li>
+</ol>
+<h2 id="百度">百度</h2>
+<h3 id="一面-15">一面</h3>
+<ol>
+<li>项目</li>
+<li>无八股</li>
+<li>旋转有几种表示方法</li>
+<li>如何进行四元数插值</li>
+<li>描述点到点 ICP 算法过程</li>
+<li>手撕：寻找两个正序数组的中位数（Hard）（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/median-of-two-sorted-arrays/">Leetcode 4</a>）</li>
+</ol>
+<p>反问：计算机 3D 视觉就是高精地图，整个地图组大概八九十人，点云融合组不到十个人，主要做 Apollo robotaxi 和百度 ANP（L2 辅助驾驶）</p>
+<h3 id="二面-9">二面</h3>
+<ol>
+<li>纯问项目，无八股，无手撕</li>
+<li>FAST-LIO2 和 LIO-MAPPING 这两种 LIO 的方法，有什么区别，对应的 covariance 有什么区别，对优化过程有什么影响</li>
+<li>LIO 过程中，如果利用滑窗的方法，既想让滑窗覆盖的范围大一些，又想不让 IMU 积分时间太长，应该怎么办（参考 VINS-MONO 的方法，回去补课）</li>
+</ol>
+<h3 id="三面-6">三面</h3>
+<ol>
+<li>聊天，聊项目</li>
+</ol>
+<h2 id="文远知行-2">文远知行</h2>
+<h3 id="一面-16">一面</h3>
+<ol>
+<li>面了一个半小时，没做自我介绍，上来就介绍阿里的项目</li>
+<li>面试官是做决策的，聊了四十多分钟的决策， 给了很多场景，问这些场景下车辆应该考虑哪些因素做决策</li>
+<li>手撕：给一组二维点以及一个四元数，输出旋转之后的二维点，用 Eigen 实现</li>
+<li>计算 sqrt(x)</li>
+</ol>
+<h3 id="二面-10">二面</h3>
+<ol>
+<li>项目、实习（实习问了将近半小时，觉得达摩院的方案做的不行）</li>
+<li>手撕：反转每对括号间的子串（<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-substrings-between-each-pair-of-parentheses/">Leetcode 1190</a>）</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="category-chain-item">面经</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A7%8B%E6%8B%9B/">#秋招</a>
+      
+        <a href="/tags/%E5%AE%9E%E4%B9%A0/">#实习</a>
+      
+        <a href="/tags/SLAM/">#SLAM</a>
+      
+        <a href="/tags/%E9%9D%A2%E7%BB%8F/">#面经</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SLAM算法工程师面经</div>
+      <div>https://fansaorz.github.io/2023/02/10/SLAM算法工程师面经/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiashi Zhang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="机器学习相关基础概念">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器学习相关基础概念</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="Hexo+Github搭建个人博客">
+                        <span class="hidden-mobile">Hexo+Github搭建个人博客</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"F6F3aER7Bp312kQVxqaLhS8e-gzGzoHsz","appKey":"qGr8lKhZ4MUvmbRkeAmsdEtW","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
