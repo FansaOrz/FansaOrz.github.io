@@ -16,29 +16,29 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
+    <meta name="description" content="Unet和FPN的介绍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ROME学习笔记">
-<meta property="og:url" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="UNET和FPN">
+<meta property="og:url" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
+<meta property="og:description" content="Unet和FPN的介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png">
-<meta property="article:published_time" content="2024-04-14T14:43:27.000Z">
-<meta property="article:modified_time" content="2024-12-14T09:36:40.498Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/method.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/fpn.png">
+<meta property="article:published_time" content="2024-12-15T02:39:39.000Z">
+<meta property="article:modified_time" content="2024-12-15T03:10:31.617Z">
 <meta property="article:author" content="Jiashi Zhang">
-<meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="MLP">
-<meta property="article:tag" content="论文解读">
-<meta property="article:tag" content="计算机视觉">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="基础知识">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="神经网络">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/method.png">
   
   
   
-  <title>ROME学习笔记 - Jiashi Blog</title>
+  <title>UNET和FPN - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -223,7 +223,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ROME学习笔记"></span>
+            <span id="subtitle" data-typed-text="UNET和FPN"></span>
           
         </div>
 
@@ -234,8 +234,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-14 22:43" pubdate>
-          2024年4月14日 晚上
+        <time datetime="2024-12-15 10:39" pubdate>
+          2024年12月15日 上午
         </time>
       </span>
     
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          485 字
+          548 字
         
       </span>
     
@@ -303,45 +303,39 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ROME学习笔记</h1>
+            <h1 style="display: none">UNET和FPN</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>相关文档</h1>
+                <h1>FPN(Feature Pyramid Network)</h1>
 <ul>
-<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li>
-<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li>
-</ul>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png" srcset="/img/loading.gif" lazyload class=""></p>
-<h1>Introduction</h1>
-<ul>
-<li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li>
-<li>同时可以估计外参</li>
-<li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法
-<ul>
-<li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li>
-<li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li>
-</ul>
+<li>
+<p>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1612.03144">Feature Pyramid Networks for Object Detection</a></p>
 </li>
-<li>因此 RoME 的方法是：
-<ul>
-<li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li>
-<li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li>
-</ul>
+<li>
+<p>这篇论文是用特征金字塔做目标检测的。FPN网络将特征金字塔模型引入Faster R-CNN中，在不牺牲内存和检测速度的情况下，达到了SOTA的效果，同时对<strong>小物体</strong>的检测也获得不错的效果。</p>
+</li>
+<li>
+<p>在目标检测任务重，不同尺度下的目标识别是一个很大的挑战。之前多数的object detection方法都是只采用顶层特征做预测（卷积的最后一层），<strong>底层的特征语义信息比较少，但目标位置准确；顶层的特征语义信息比较丰富，但目标位置不够准确</strong>。</p>
+</li>
+<li>
+<p>有以下四种方法：</p>
 </li>
 </ul>
-<h1>Approaches</h1>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png" srcset="/img/loading.gif" lazyload class="" title="method"></p>
+<p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/method.png" srcset="/img/loading.gif" lazyload class=""></p>
 <ul>
-<li>主要分成三个部分，waypoints 采样、Mesh 初始化和优化</li>
-<li>常用的术语和定义为：
+<li>图a，使用图像金字塔的方式生成多尺度特征。先生成很多不同分辨率的图像，然后对不同尺度下，通过ConvNet前向过程生成各自的feature map</li>
+<li>图b，CNN网络最常用的结构，只用最后一层feature map做预测</li>
+<li>图c，SSD的做法，从conv4开始每一层的feature都做预测，就得到了多尺度下的特征，但这样每一层预测时都没用到最顶层的特征，而最顶层的特征信息对小物体检测效果更好</li>
+<li>图d，FPN的做法，多了一个上采样的过程，然后和浅层的特征融合，在独立做预测。</li>
+</ul>
+<p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/fpn.png" srcset="/img/loading.gif" lazyload class=""></p>
+<h1>参考文档</h1>
 <ul>
-<li>3D point cloud：点云，包含了空间中的所有点，每个点都有对应的坐标和颜色信息</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51015047/article/details/121242275">FPN与U-Net</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/351279839">目标检测的FPN和Unet有差别吗?</a></li>
 </ul>
-</li>
-</ul>
-<h2 id=""></h2>
 
                 
               </div>
@@ -360,7 +354,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
   
   
 
@@ -375,15 +369,15 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
-      
         <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
       
-        <a href="/tags/MLP/">#MLP</a>
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
       
-        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
+        <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">#基础知识</a>
       
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">#计算机视觉</a>
+        <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
+      
+        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">#神经网络</a>
       
     </div>
   
@@ -395,8 +389,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ROME学习笔记</div>
-      <div>https://fansaorz.github.io/2024/04/14/ROME详解/</div>
+      <div>UNET和FPN</div>
+      <div>https://fansaorz.github.io/2024/12/15/UNET和FPN/</div>
     </div>
     <div class="license-meta">
       
@@ -408,7 +402,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年4月14日</div>
+          <div>2024年12月15日</div>
         </div>
       
       
@@ -440,18 +434,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/20/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="CUDA编程基础">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CUDA编程基础</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记">
-                        <span class="hidden-mobile">3D Gaussian Splatting学习笔记</span>
+                      <a href="/2024/12/07/GausSurf%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" title="GausSurf学习笔记">
+                        <span class="hidden-mobile">GausSurf学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

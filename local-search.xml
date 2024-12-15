@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>UNET和FPN</title>
+    <link href="/2024/12/15/UNET%E5%92%8CFPN/"/>
+    <url>/2024/12/15/UNET%E5%92%8CFPN/</url>
+    
+    <content type="html"><![CDATA[<h1>FPN(Feature Pyramid Network)</h1><ul><li><p>论文链接：<a href="https://arxiv.org/abs/1612.03144">Feature Pyramid Networks for Object Detection</a></p></li><li><p>这篇论文是用特征金字塔做目标检测的。FPN网络将特征金字塔模型引入Faster R-CNN中，在不牺牲内存和检测速度的情况下，达到了SOTA的效果，同时对<strong>小物体</strong>的检测也获得不错的效果。</p></li><li><p>在目标检测任务重，不同尺度下的目标识别是一个很大的挑战。之前多数的object detection方法都是只采用顶层特征做预测（卷积的最后一层），<strong>底层的特征语义信息比较少，但目标位置准确；顶层的特征语义信息比较丰富，但目标位置不够准确</strong>。</p></li><li><p>有以下四种方法：</p></li></ul><p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/method.png" class=""></p><ul><li>图a，使用图像金字塔的方式生成多尺度特征。先生成很多不同分辨率的图像，然后对不同尺度下，通过ConvNet前向过程生成各自的feature map</li><li>图b，CNN网络最常用的结构，只用最后一层feature map做预测</li><li>图c，SSD的做法，从conv4开始每一层的feature都做预测，就得到了多尺度下的特征，但这样每一层预测时都没用到最顶层的特征，而最顶层的特征信息对小物体检测效果更好</li><li>图d，FPN的做法，多了一个上采样的过程，然后和浅层的特征融合，在独立做预测。</li></ul><p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/fpn.png" class=""></p><h1>参考文档</h1><ul><li><a href="https://blog.csdn.net/weixin_51015047/article/details/121242275">FPN与U-Net</a></li><li><a href="https://www.zhihu.com/question/351279839">目标检测的FPN和Unet有差别吗?</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>机器学习</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>机器学习</tag>
+      
+      <tag>深度学习</tag>
+      
+      <tag>基础知识</tag>
+      
+      <tag>数学</tag>
+      
+      <tag>神经网络</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>GausSurf学习笔记</title>
     <link href="/2024/12/07/GausSurf%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/"/>
     <url>/2024/12/07/GausSurf%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</url>
@@ -250,7 +283,7 @@
     <link href="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/"/>
     <url>/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/</url>
     
-    <content type="html"><![CDATA[<h1>相关文档</h1><ul><li>代码链接：<a href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li></ul><h1>Introduction</h1><ul><li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li><li>同时可以估计外参</li><li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法<ul><li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li><li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li></ul></li><li>因此 RoME 的方法是：<ul><li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li><li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li></ul></li></ul><h1>Approaches</h1><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png" class="" title="method"></p><ul><li>主要分成三个部分，waypoints 采样、Mesh 初始化和优化</li><li>常用的术语和定义为：<ul><li>3D point cloud：点云，包含了空间中的所有点，每个点都有对应的坐标和颜色信息</li></ul></li></ul><h2 id=""></h2>]]></content>
+    <content type="html"><![CDATA[<h1>相关文档</h1><ul><li>代码链接：<a href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li></ul><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png" class=""></p><h1>Introduction</h1><ul><li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li><li>同时可以估计外参</li><li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法<ul><li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li><li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li></ul></li><li>因此 RoME 的方法是：<ul><li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li><li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li></ul></li></ul><h1>Approaches</h1><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png" class="" title="method"></p><ul><li>主要分成三个部分，waypoints 采样、Mesh 初始化和优化</li><li>常用的术语和定义为：<ul><li>3D point cloud：点云，包含了空间中的所有点，每个点都有对应的坐标和颜色信息</li></ul></li></ul><h2 id=""></h2>]]></content>
     
     
     <categories>
