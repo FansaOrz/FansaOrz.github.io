@@ -25,8 +25,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/method.png">
 <meta property="og:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/fpn.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/fpn_struct.png">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/15/UNET%E5%92%8CFPN/unet.png">
 <meta property="article:published_time" content="2024-12-15T02:39:39.000Z">
-<meta property="article:modified_time" content="2024-12-15T03:10:31.617Z">
+<meta property="article:modified_time" content="2024-12-15T03:36:01.305Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="深度学习">
@@ -246,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          548 字
+          1.5k 字
         
       </span>
     
@@ -257,7 +259,7 @@
         
         
         
-          5 分钟
+          13 分钟
         
       </span>
     
@@ -331,10 +333,43 @@
 <li>图d，FPN的做法，多了一个上采样的过程，然后和浅层的特征融合，在独立做预测。</li>
 </ul>
 <p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/fpn.png" srcset="/img/loading.gif" lazyload class=""></p>
+<ul>
+<li>一个是自底向上的线路，一个是自顶向下的线路。放大的区域就是横向连接。这里1x1的卷积核主要作用是降维，不改变尺寸大小。</li>
+</ul>
+<p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/fpn_struct.png" srcset="/img/loading.gif" lazyload class=""></p>
+<h1>UNET</h1>
+<ul>
+<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1505.04597">U-Net: Convolutional Networks for Biomedical Image Segmentation</a></li>
+</ul>
+<p align="center"><img src="/2024/12/15/UNET%E5%92%8CFPN/unet.png" srcset="/img/loading.gif" lazyload class=""></p>
+<ul>
+<li>前半部分就是特征提取，后半部分是上采样。也是Encoder-Decoder结构。
+<ul>
+<li>Encoder：由两个3x3的卷积层再加上一个2x2的池化层构成下采样的模块</li>
+<li>Decoder：有一个上采样的卷积层（反卷积）+特征拼接+两个3x3的卷积层构成的上采样的模块</li>
+</ul>
+</li>
+</ul>
+<h1>两种方法的异同</h1>
+<ul>
+<li>同：都使用了“自底向上”、“横向连接”及“自顶向下”的结构，从而对多尺度特征图进行融合，即将高层的语义信息与低层的几何细节结合。另外，融合后都会再经过一层卷积。</li>
+<li>异：
+<ol>
+<li>FPN对多尺度特征图融合的方式是element-wise add（每个元素对应相加），而UNet采用的是concate；</li>
+<li>FPN对多尺度特征图都进行了预测，而UNet仅在（由上至下）最后一层进行预测，而且这一层通常还需要进行一次resize才能恢复到原图尺寸；</li>
+<li>FPN对高层特征图采用的放大方式是插值，而UNet通常还会使用<strong>转置卷积</strong>，通过网络自学习的方式来进行上采样；</li>
+<li>FPN的高层特征放大2倍后与低层的尺寸恰好一致，而在UNet中通常不一致，还需要对低层特征做crop使得与放大后的高层特征尺寸一致；</li>
+<li>FPN在下采样时的卷积带有padding，分辨率的下降仅由stirde决定，而UNet的卷积通常不带padding，使得分辨率下降在stride的基础上还会额外的减小。也就是说，FPN的“由下至上”和“由下至上”是对称结构，而UNet其实是非对称的，这也是导致4和2中最后提到的原因‘；</li>
+<li>FPN在特征层融合后经过一层卷积是为了消除上采样过程中产生的混叠效应带来的影响，而UNet中还起到了压缩通道的作用（也是由于UNet融合特征层时采用的是concate，因此需要压缩通道减少计算量）；</li>
+<li>FPN主要针对detection任务，而UNet针对segmentation任务，前者通常作为一个模块嵌入到网络结构中，而后者本身就是一种网络模型结构。</li>
+</ol>
+</li>
+</ul>
 <h1>参考文档</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51015047/article/details/121242275">FPN与U-Net</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/351279839">目标检测的FPN和Unet有差别吗?</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Eyesleft_being/article/details/120989953">【原理篇】一文读懂FPN(Feature Pyramid Networks)</a></li>
 </ul>
 
                 
