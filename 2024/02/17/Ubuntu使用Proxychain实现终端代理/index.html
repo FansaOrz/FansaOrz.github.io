@@ -16,28 +16,27 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="介绍如何利用Clash工具在Ubuntu系统中实现网络代理">
+    <meta name="description" content="Ubuntu使用Proxychains实现终端代理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu系统中Clash的使用">
-<meta property="og:url" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/index.html">
+<meta property="og:title" content="Ubuntu使用Proxychains实现终端代理">
+<meta property="og:url" content="https://fansaorz.github.io/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="介绍如何利用Clash工具在Ubuntu系统中实现网络代理">
+<meta property="og:description" content="Ubuntu使用Proxychains实现终端代理">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/clash.png">
-<meta property="og:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/razord.png">
-<meta property="og:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/proxy.png">
-<meta property="article:published_time" content="2023-02-16T04:51:47.000Z">
-<meta property="article:modified_time" content="2024-12-13T14:02:28.600Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/config.png">
+<meta property="article:published_time" content="2024-02-17T12:04:48.000Z">
+<meta property="article:modified_time" content="2024-12-21T12:13:25.304Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="Ubuntu">
-<meta property="article:tag" content="Clash">
-<meta property="article:tag" content="教程">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="科学上网">
+<meta property="article:tag" content="代理">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/clash.png">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/config.png">
   
   
   
-  <title>Ubuntu系统中Clash的使用 - Jiashi Blog</title>
+  <title>Ubuntu使用Proxychains实现终端代理 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -220,7 +219,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Ubuntu系统中Clash的使用"></span>
+            <span id="subtitle" data-typed-text="Ubuntu使用Proxychains实现终端代理"></span>
           
         </div>
 
@@ -231,8 +230,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-16 12:51" pubdate>
-          2023年2月16日 下午
+        <time datetime="2024-02-17 20:04" pubdate>
+          2024年2月17日 晚上
         </time>
       </span>
     
@@ -243,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          351 字
+          180 字
         
       </span>
     
@@ -254,7 +253,7 @@
         
         
         
-          3 分钟
+          2 分钟
         
       </span>
     
@@ -300,24 +299,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Ubuntu系统中Clash的使用</h1>
+            <h1 style="display: none">Ubuntu使用Proxychains实现终端代理</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>Clash 安装</h1>
-<p>在 Clash 的<a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash/releases">Github 仓库</a>中找到最新的 Release，下载到电脑中并解压</p>
-<img src="/2023/02/16/Ubuntu-Clash/clash.png" srcset="/img/loading.gif" lazyload class="" title="figure">
-<h1>下载配置文件</h1>
-<p>在对应的机场中下载配置文件，笔者此处使用的是<a target="_blank" rel="noopener" href="https://juzi20.com">桔子云</a>，将下载的配置文件修改名称为<span class="label label-primary">config.yaml</span>。下载<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/Dreamacro/maxmind-geoip@release/Country.mmdb">Country.mmdb</a>，将这两个文件放在~/.config/clash 路径中</p>
-
-<h1>运行</h1>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~/Softwares/clash<br><span class="hljs-built_in">chmod</span> 777 ./clash-linux-amd64-v3<br>./clash-linux-amd64-v3<br></code></pre></td></tr></table></figure>
-<p>在浏览器中打开<a target="_blank" rel="noopener" href="https://clash.razord.top">https://clash.razord.top</a>即可进入 Clash 的配置页面，可以实现修改节点，测试等功能</p>
-<img src="/2023/02/16/Ubuntu-Clash/razord.png" srcset="/img/loading.gif" lazyload class="" title="figure">
-<h1>全局配置</h1>
-<p>在 Ubuntu 的<span class="label label-primary">Setting->Network->Network Proxy</span>中修改配置为手动，具体参数如下图。此时即完成了网络代理的设置</p>
-<img src="/2023/02/16/Ubuntu-Clash/proxy.png" srcset="/img/loading.gif" lazyload class="" title="figure">
+                <h1>安装Proxychains</h1>
+<blockquote>
+<p>sudo apt install tor proxychains</p>
+</blockquote>
+<h1>配置Proxychains</h1>
+<ul>
+<li>修改/etc/proxychains.conf文件，添加socket5的代理信息，记得端口号和实际使用的保持一致：</li>
+</ul>
+<p align="center"><img src="/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/config.png" srcset="/img/loading.gif" lazyload class=""></p>
+<h1>使用Proxychains</h1>
+<ul>
+<li>在需要走代理的命令前加上proxychains，比如：</li>
+</ul>
+<blockquote>
+<p>proxychains curl <a target="_blank" rel="noopener" href="http://www.google.com">www.google.com</a></p>
+</blockquote>
 
                 
               </div>
@@ -353,9 +355,11 @@
       
         <a href="/tags/Ubuntu/">#Ubuntu</a>
       
-        <a href="/tags/Clash/">#Clash</a>
+        <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
       
-        <a href="/tags/%E6%95%99%E7%A8%8B/">#教程</a>
+        <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">#科学上网</a>
+      
+        <a href="/tags/%E4%BB%A3%E7%90%86/">#代理</a>
       
     </div>
   
@@ -367,8 +371,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Ubuntu系统中Clash的使用</div>
-      <div>https://fansaorz.github.io/2023/02/16/Ubuntu-Clash/</div>
+      <div>Ubuntu使用Proxychains实现终端代理</div>
+      <div>https://fansaorz.github.io/2024/02/17/Ubuntu使用Proxychain实现终端代理/</div>
     </div>
     <div class="license-meta">
       
@@ -380,7 +384,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月16日</div>
+          <div>2024年2月17日</div>
         </div>
       
       
@@ -412,9 +416,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/" title="Ubuntu使用Proxychains实现终端代理">
+                      <a href="/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/" title="NeRF学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Ubuntu使用Proxychains实现终端代理</span>
+                        <span class="hidden-mobile">NeRF学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -422,8 +426,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" title="docker安装及使用">
-                        <span class="hidden-mobile">docker安装及使用</span>
+                      <a href="/2023/02/16/Ubuntu-Clash/" title="Ubuntu系统中Clash的使用">
+                        <span class="hidden-mobile">Ubuntu系统中Clash的使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

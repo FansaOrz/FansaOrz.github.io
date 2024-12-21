@@ -16,15 +16,15 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="这是一篇隐藏文章">
+    <meta name="description" content="这是一篇隐藏文章 云端众包建图算法开发及维护  针对高架桥等多层场景，设计并实现激光点云回环质检方法，提高 patch map 建图的成功率 针对多 Trip 之间的先验位姿误差较大的问题，实现基于 BnB 的回环检测搜索算法，提高多 Trip 之间回环搜索的成功率 对生成的地面 Intensity Map 设计噪点过滤算法，提高地面车道线元素的清晰度 负责建图 Pipeline 的维护和优化；开">
 <meta property="og:type" content="article">
 <meta property="og:title" content="隐藏文章">
 <meta property="og:url" content="https://fansaorz.github.io/2023/02/10/%E9%9A%90%E8%97%8F%E6%96%87%E7%AB%A0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="这是一篇隐藏文章">
+<meta property="og:description" content="这是一篇隐藏文章 云端众包建图算法开发及维护  针对高架桥等多层场景，设计并实现激光点云回环质检方法，提高 patch map 建图的成功率 针对多 Trip 之间的先验位姿误差较大的问题，实现基于 BnB 的回环检测搜索算法，提高多 Trip 之间回环搜索的成功率 对生成的地面 Intensity Map 设计噪点过滤算法，提高地面车道线元素的清晰度 负责建图 Pipeline 的维护和优化；开">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-10T04:49:51.000Z">
-<meta property="article:modified_time" content="2024-12-13T14:02:28.607Z">
+<meta property="article:modified_time" content="2024-12-21T12:15:21.517Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="hide">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8 字
+          1.7k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          1 分钟
+          15 分钟
         
       </span>
     
@@ -300,6 +300,84 @@
               <div class="markdown-body">
                 
                 <h1>这是一篇隐藏文章</h1>
+<h1>云端众包建图算法开发及维护</h1>
+<ul>
+<li>针对高架桥等多层场景，设计并实现激光点云回环质检方法，提高 patch map 建图的成功率</li>
+<li>针对多 Trip 之间的先验位姿误差较大的问题，实现基于 BnB 的回环检测搜索算法，提高多 Trip 之间回环搜索的成功率</li>
+<li>对生成的地面 Intensity Map 设计噪点过滤算法，提高地面车道线元素的清晰度</li>
+<li>负责建图 Pipeline 的维护和优化；开发轨迹质检算法；多线程提高回环检测速度等</li>
+</ul>
+<h1>行车道路场景重建</h1>
+<ul>
+<li>优化 Colmap 中的特征提取和匹配方法，提高 SFM 计算的相机 pose 精度</li>
+<li>Colmap 结合先验点云地图信息，实现对多相机位姿及相机外参的优化，提高位姿精度及路面重建效果</li>
+<li>基于 RoME 方法实现行车道路路面的 mesh 重建，为下游标注提供新的数据形式</li>
+<li>尝试基于 2DGS 的物体三维模型生成方法，用于仿真数据生成</li>
+</ul>
+<h1>Map Prior 数据生产</h1>
+<ul>
+<li>结合车身的 6 个周视相机和 Intensity Map，推理对应的车道线、路沿等 feature，作为 Map Prior</li>
+<li>结合非机动车和机动车的车流信息，提高模型对非机动车道和应急车道等特殊车道属性的检测精度</li>
+<li>实现多 Trip 语义 feature 的对齐模型，自动拼接生成众包的 Map Prior</li>
+</ul>
+<h1>基于 SD link 的全局选路算法</h1>
+<ul>
+<li>实现车端拓扑计算及上报，云端众包更新的数据闭环流程</li>
+<li>优化静态选路算法：适配拓扑信息；Y 字路口、右转专用道等特殊场景的选路策略优化，减少车辆多余变道、走错路的风险</li>
+</ul>
+<h1>其他</h1>
+<ul>
+<li>有良好的 C++代码编写习惯，具有良好的沟通、协作能力能力，有良好的职业道德和较强的工作责任感。</li>
+</ul>
+<h1>方案</h1>
+<h2 id="3D-资产生成">3D 资产生成</h2>
+<p align="center"></p>
+- 预处理步骤：
+  - sam2分割物体，提取主体
+  - Colmap获取pose
+  - TODO: 测试must3r
+- 重建步骤：
+  - 降低背景亮度，提高重建精度
+<ul>
+<li>后处理：
+<ul>
+<li>如何只提取目标物的 mesh？
+<ul>
+<li>在对 tsdf 提取 mesh 前，将每一张 depth map 的背景设置为 0。TSDF 融合过程中，深度值为 0 的区域会被视为无效数据，不参与融合。参考：<a target="_blank" rel="noopener" href="https://www.open3d.org/docs/latest/tutorial/t_reconstruction_system/integration.html">TSDF Integration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1>面试准备</h1>
+<h2 id="PSNR（峰值信噪比）公式和作用">PSNR（峰值信噪比）公式和作用</h2>
+<ul>
+<li>PSNR 是一种评价图像质量的指标，用于衡量原始图像和重建图像之间的差异。</li>
+<li>定义为：给定一个原始图像，另一个图像为重建图像，PSNR 就是原始图像和重建图像之间的均方误差 MSE 的平均值。</li>
+<li>计算公式为：<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mi>S</mi><mi>N</mi><mi>R</mi><mo>=</mo><mn>10</mn><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>10</mn></msub><mfrac><mrow><mi>M</mi><mi>A</mi><msubsup><mi>X</mi><mi>I</mi><mn>2</mn></msubsup></mrow><mrow><mi>M</mi><mi>S</mi><mi>E</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">PSNR = 10 \log_{10} \frac{MAX_{I}^2}{MSE}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">PSNR</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1771em;vertical-align:-0.686em;"></span><span class="mord">10</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.207em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">10</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4911em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">MSE</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-2.4247em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">I</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2753em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+<li>其中，MSE 是原始图像和重建图像之间的均方误差，MAX 是图像颜色的最大数值，8 位采样点表示为 255。<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>m</mi><mi>n</mi></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow></munderover><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></munderover><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>I</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo><mo>−</mo><mi>K</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msup><mi mathvariant="normal">∣</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">MSE = \frac{1}{mn} \sum_{i=0}^{m-1} \sum_{j=0}^{n-1} ||I(i, j) - K(i, j)||^2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">MSE</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.2149em;vertical-align:-1.4138em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">mn</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8011em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8011em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4138em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣∣</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mord">∣</span><span class="mord"><span class="mord">∣</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
+</li>
+</ul>
+<h2 id="怎么看待-NeRF-和-3D-GS-的差别（关系）？">怎么看待 NeRF 和 3D GS 的差别（关系）？</h2>
+<ul>
+<li>NeRF 是一种隐式的表示方法，在几何表面重建效果上要比 3D GS 更好，但是训练效率比较低下。虽然 3D GS 有些 2D GS 表面重建改进工作，但是目前（主流观念里）NeRF 和 SDF 结合的工作仍然在几何上更好。</li>
+<li>我提到了：NeRF 和 3D GS 共同点：体渲染 alpha blending 公式是大体一样的，后面发展趋势上也是类似的，3DGS 一些改进工作也是沿着 NeRF 的改进思路在发展，比如重光照、反光、（动态 4DGS、抗锯齿、HDR 等等）。</li>
+<li>面试结束后又想起来了，再补充：3D GS 是一种比较稀疏的显式表示，而且 3DGS 需要 SFM 的点云初始化。NeRF 是一种稠密的场表示，对于 SDS 优化来说，NeRF 更容易优化，生成效果更好。（目前很少有方法直接采用 3D GS 作为生成阶段的 3D 表示，主要是还是优化效果没有 SDF 效果好）</li>
+</ul>
+<h2 id="正则化的作用和-pytorch-实现">正则化的作用和 pytorch 实现</h2>
+<h2 id="L1-L2-loss-的区别和优缺点">L1 L2 loss 的区别和优缺点</h2>
+<h2 id="交叉熵-loss，代码">交叉熵 loss，代码</h2>
+<h2 id="多-loss-加和，如何实现自适应权重调节">多 loss 加和，如何实现自适应权重调节</h2>
+<h2 id="Neural-SDF-学习">Neural SDF 学习</h2>
+<h2 id="代码">代码</h2>
+<h3 id="股票最大收益">股票最大收益</h3>
+<h3 id="快排">快排</h3>
+<h3 id="青蛙跳">青蛙跳</h3>
+<h3 id="平均池化层代码">平均池化层代码</h3>
+<h3 id="Cross-attention-代码和公式">Cross-attention 代码和公式</h3>
 
                 
               </div>
