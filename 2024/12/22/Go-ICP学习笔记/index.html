@@ -16,33 +16,21 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
+    <meta name="description" content="相关资料  代码链接：https:&#x2F;&#x2F;github.com&#x2F;yangjiaolong&#x2F;Go-ICP  分支定界（Branch and Bound）介绍  定义：分支定界法始终围绕着一颗搜索树进行，将原问题看做搜索树的根节点，从这里出发，分支的含义就是将大的问题分割成小的问题。大问题可以看成是搜索树的父节点，那么大问题分割出来的小问题就是父节点的子节点。分支的过程就是不断给树增加子节点的过程，而定界">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ROME学习笔记">
-<meta property="og:url" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="Go-ICP学习笔记">
+<meta property="og:url" content="https://fansaorz.github.io/2024/12/22/Go-ICP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="RoMe: Towards Large Scale Road Surface Reconstruction via Mesh Representation">
+<meta property="og:description" content="相关资料  代码链接：https:&#x2F;&#x2F;github.com&#x2F;yangjiaolong&#x2F;Go-ICP  分支定界（Branch and Bound）介绍  定义：分支定界法始终围绕着一颗搜索树进行，将原问题看做搜索树的根节点，从这里出发，分支的含义就是将大的问题分割成小的问题。大问题可以看成是搜索树的父节点，那么大问题分割出来的小问题就是父节点的子节点。分支的过程就是不断给树增加子节点的过程，而定界">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/waypoint_sample.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_1.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_2.png">
-<meta property="og:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_3.png">
-<meta property="article:published_time" content="2024-04-14T14:43:27.000Z">
-<meta property="article:modified_time" content="2024-12-22T11:55:03.166Z">
+<meta property="article:published_time" content="2024-12-22T08:06:18.000Z">
+<meta property="article:modified_time" content="2024-12-22T08:11:01.323Z">
 <meta property="article:author" content="Jiashi Zhang">
-<meta property="article:tag" content="视觉重建">
-<meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="MLP">
-<meta property="article:tag" content="论文解读">
-<meta property="article:tag" content="计算机视觉">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png">
   
   
   
-  <title>ROME学习笔记 - Jiashi Blog</title>
+  <title>Go-ICP学习笔记 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -53,8 +41,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -227,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ROME学习笔记"></span>
+            <span id="subtitle" data-typed-text="Go-ICP学习笔记"></span>
           
         </div>
 
@@ -238,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-14 22:43" pubdate>
-          2024年4月14日 晚上
+        <time datetime="2024-12-22 16:06" pubdate>
+          2024年12月22日 下午
         </time>
       </span>
     
@@ -250,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          265 字
         
       </span>
     
@@ -261,7 +247,7 @@
         
         
         
-          11 分钟
+          3 分钟
         
       </span>
     
@@ -307,78 +293,19 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ROME学习笔记</h1>
+            <h1 style="display: none">Go-ICP学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>相关文档</h1>
+                <h1>相关资料</h1>
 <ul>
-<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li>
-<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li>
+<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/yangjiaolong/Go-ICP">https://github.com/yangjiaolong/Go-ICP</a></li>
 </ul>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png" srcset="/img/loading.gif" lazyload class=""></p>
-<h1>Introduction</h1>
+<h1>分支定界（Branch and Bound）介绍</h1>
 <ul>
-<li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li>
-<li>同时可以估计外参</li>
-<li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法
-<ul>
-<li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li>
-<li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li>
+<li>定义：分支定界法始终围绕着一颗搜索树进行，将原问题看做搜索树的根节点，从这里出发，分支的含义就是将大的问题分割成小的问题。大问题可以看成是搜索树的父节点，那么大问题分割出来的小问题就是父节点的子节点。分支的过程就是不断给树增加子节点的过程，而定界就是在分支的过程中检查子问题的上下界，如果子问题不能产生比当前最优解还要优的解，就砍掉这一分支。直到所有子问题都不能产生一个更优的解时，算法结束。</li>
 </ul>
-</li>
-<li>因此 RoME 的方法是：
-<ul>
-<li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li>
-<li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li>
-</ul>
-</li>
-</ul>
-<h1>Approaches</h1>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png" srcset="/img/loading.gif" lazyload class="" title="method"></p>
-<ul>
-<li>主要分成三个部分，Mesh 初始化、waypoints 采样、和优化</li>
-</ul>
-<h2 id="Mesh-Initialization">Mesh Initialization</h2>
-<ul>
-<li>文章使用ORB-SLAM2的pose来初始化mesh。文章使用ORB-SLAM得到相机的每一帧位姿，同时使用Mask2Former来分割语义信息。</li>
-<li>Mesh初始化的方法主要参考：<a target="_blank" rel="noopener" href="https://ventusff.github.io/streetsurf_web/">StreetSurf</a>
-<ul>
-<li>水平延伸自车位姿来得到半稠密的点云，然后把些点放到一个MLP网络中，输入xy的坐标，输出z值（用MLP来拟合一个地面表示）。并对xy的值做位置编码，用MLP是为了通过调整PE的评率来控制路面的平滑度</li>
-</ul>
-</li>
-</ul>
-<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>=</mo><mi>M</mi><mi>L</mi><mi>P</mi><mo stretchy="false">(</mo><mi>P</mi><mi>E</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z = MLP(PE(x, y))
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">PE</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">))</span></span></span></span></span></p>
-<h2 id="Waypoint-Sampling">Waypoint Sampling</h2>
-<ul>
-<li>这里使用<strong>最远点采样</strong>的方法对输入的相机pose做了一次采样，每次选取部分采样点后，就只用这几个图片训练当前epoch就行了，而不需要全部图片。</li>
-</ul>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/waypoint_sample.png" srcset="/img/loading.gif" lazyload class=""></p>
-<ul>
-<li><strong>个人认为</strong>，这里的采样除了可以加速以外，还有一个原因是因为用的ORB-SLAM的位姿，这个位姿会有误差，如果全部图片都用上的话，模型不太能把位置误差估计出来，导致有重影。而经过位置采样后，每个epoch中，每个范围只由一张image来训练，其他的误差不会引入进来，最后渲染的mesh就会更清晰。</li>
-</ul>
-<h2 id="Optimization">Optimization</h2>
-<ul>
-<li>优化了两个部分，外参优化和RGB+语义的Mesh优化</li>
-</ul>
-<h3 id="外参优化">外参优化</h3>
-<ul>
-<li>旋转矩阵用轴和轴角表示。在优化中同时估计旋转和平移，来实现外参优化。</li>
-<li>使用Rodrigues公式，将轴角表示的旋转矩阵转换为旋转向量</li>
-</ul>
-<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mo>=</mo><mi>I</mi><mo>+</mo><mfrac><mrow><mi>sin</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo></mrow><mi>α</mi></mfrac><msup><mi>ϕ</mi><mover accent="true"><mrow></mrow><mo>^</mo></mover></msup><mo>+</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mi>cos</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo></mrow><msup><mi>α</mi><mn>2</mn></msup></mfrac><mo stretchy="false">(</mo><msup><mi>ϕ</mi><mover accent="true"><mrow></mrow><mo>^</mo></mover></msup><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">R = I + \frac{\sin(\alpha)}{\alpha}  \phi^{\hat{}} + \frac{1 - \cos(\alpha)}{\alpha^2}  (\phi^{\hat{}})^2
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">sin</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal">ϕ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">^</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mop">cos</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">ϕ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">^</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
-<p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mo>∗</mo><msup><mo stretchy="false">)</mo><mover accent="true"><mrow></mrow><mo>^</mo></mover></msup></mrow><annotation encoding="application/x-tex">(*)^{\hat{}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">∗</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">^</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>表示向量转成反对称矩阵</p>
-<h3 id="Mesh优化">Mesh优化</h3>
-<ul>
-<li>使用当前mesh来渲染waypoint的图像，然后RGB使用L1 Loss，语义信息使用交叉熵Loss</li>
-</ul>
-<h1>Result</h1>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_1.png" srcset="/img/loading.gif" lazyload class=""></p>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_2.png" srcset="/img/loading.gif" lazyload class=""></p>
-<p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_3.png" srcset="/img/loading.gif" lazyload class=""></p>
 
                 
               </div>
@@ -387,42 +314,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
-      
-        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
-      
-        <a href="/tags/MLP/">#MLP</a>
-      
-        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
-      
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">#计算机视觉</a>
-      
-    </div>
   
 </div>
 
@@ -432,8 +323,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ROME学习笔记</div>
-      <div>https://fansaorz.github.io/2024/04/14/ROME详解/</div>
+      <div>Go-ICP学习笔记</div>
+      <div>https://fansaorz.github.io/2024/12/22/Go-ICP学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -445,7 +336,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年4月14日</div>
+          <div>2024年12月22日</div>
         </div>
       
       
@@ -477,18 +368,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/20/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="CUDA编程基础">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CUDA编程基础</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记">
-                        <span class="hidden-mobile">3D Gaussian Splatting学习笔记</span>
+                      <a href="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="GausSurf学习笔记">
+                        <span class="hidden-mobile">GausSurf学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -576,11 +461,6 @@
 
 
   
-
-
-  
-  
-
 
 
 

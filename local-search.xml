@@ -4,11 +4,24 @@
   
   
   <entry>
+    <title>Go-ICP学习笔记</title>
+    <link href="/2024/12/22/Go-ICP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <url>/2024/12/22/Go-ICP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<h1>相关资料</h1><ul><li>代码链接：<a href="https://github.com/yangjiaolong/Go-ICP">https://github.com/yangjiaolong/Go-ICP</a></li></ul><h1>分支定界（Branch and Bound）介绍</h1><ul><li>定义：分支定界法始终围绕着一颗搜索树进行，将原问题看做搜索树的根节点，从这里出发，分支的含义就是将大的问题分割成小的问题。大问题可以看成是搜索树的父节点，那么大问题分割出来的小问题就是父节点的子节点。分支的过程就是不断给树增加子节点的过程，而定界就是在分支的过程中检查子问题的上下界，如果子问题不能产生比当前最优解还要优的解，就砍掉这一分支。直到所有子问题都不能产生一个更优的解时，算法结束。</li></ul>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>GausSurf学习笔记</title>
     <link href="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <url>/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     
-    <content type="html"><![CDATA[<h1>相关文档</h1><ul><li>项目链接：<a href="https://jiepengwang.github.io/GausSurf/">https://jiepengwang.github.io/GausSurf/</a></li><li>代码链接：<a href="https://github.com/jiepengwang/GausSurf">https://github.com/jiepengwang/GausSurf</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2411.19454">https://arxiv.org/pdf/2411.19454</a></li></ul><h1>Introduction</h1><ul><li><p>3DGS主要用于新视角合成，而不是表面重建，因此不能生成高质量的表面重建。SuGaR通过对高斯函数正则化使其平坦；2DGS将场景表示为一组2D高斯盘，并使用表面法线正则化来重建高质量的表面。但以上问题作者认为质量都有限而且优化速度慢。</p></li><li><p>文章提出，自然场景通常由两种类型的区域组成：</p><ul><li>纹理丰富的</li><li>无纹理的</li><li>对于纹理丰富的，使用多视图一致性约束来引导优化过程；对于无纹理的，结合预训练模型中的法线先验来提供补充监督信号。通过有效的整合这些几何先验，文章的方法实现了高质量和快速表面重建。</li></ul></li><li><p>为了提高优化效率和精度，文章通过迭代合并来强制多视图的一致性。在训练GausSurf时，除了利用输入图像的监督损失外，还将立体匹配引入到高斯函数的优化中。具体来说：</p><ul><li>使用patch-matching算法来细化深度值和法线图，这样可以匹配多视图图像，以便在优化高斯函数时准确定位表面的位置。</li><li>随后，增强的深度和法线将作为几何引导和监督信号，进一步指导高斯函数的优化。</li></ul></li><li><p>传统的MVS里也包含了PatchMatch步骤，但只是在sfm得到的稀疏点云中进行一次。这里的系数点云存在较多的错误点和噪声，因此导致MVS重建质量下降。同时，文章在PatchMatch中还采用了额外的几何验证策略，其中跨多视图的差异超过阈值时，将该点视为错误点而丢弃，这些被丢弃的图像区域意味着他们不包含足够的纹理来进行块匹配，并且无法产生可靠的深度和法线。这些像素归类为无纹理的区域，并在这些区域中使用额外的法线先验用于优化。</p></li><li><p>总结文章的贡献：</p><ul><li>整合了传统的MVS中的PatchMatch方法和法线先验信息，增强重建保真度和计算效率；</li></ul></li></ul><h1>Related Work</h1><ul><li>作者提到一篇：<a href="https://arxiv.org/pdf/2403.16964">Gsdf: 3dgs meets sdf for improved rendering and reconstruction</a>，是把SDF和3DGS结合起来的文章，可以关注一下。</li></ul><h1>Method</h1><h2 id="基于PatchMatch的几何引导">基于PatchMatch的几何引导</h2><ul><li>文章提出了一种reginement and supervision scheme方法，主要是用MVS的几何指导来优化高斯，同时生成更准确的深度和法线图，用于后续MVS优化时的先验。</li><li>具体来说，<ul><li>首先根据超参数（训练步数），先预训练一版高斯函数，作为初始化。</li><li>然后，为所有的训练图像渲染深度图和法线图，然后把这些渲染后的结果送到PatchMatch算法中，进行细化，得到更精确的深度和法线图。</li><li>接下来，这些细化之后的图像再送到高斯模型里，优化指定步数。</li><li>迭代的重复这个过程，直到优化收敛。</li></ul></li></ul><p align="center"><img src="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/patchmatch_based.png" class=""></p>]]></content>
+    <content type="html"><![CDATA[<p align="center"><img src="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gaussurf.png" class=""></p><h1>相关文档</h1><ul><li>项目链接：<a href="https://jiepengwang.github.io/GausSurf/">https://jiepengwang.github.io/GausSurf/</a></li><li>代码链接：<a href="https://github.com/jiepengwang/GausSurf">https://github.com/jiepengwang/GausSurf</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2411.19454">https://arxiv.org/pdf/2411.19454</a></li></ul><h1>Introduction</h1><ul><li><p>3DGS主要用于新视角合成，而不是表面重建，因此不能生成高质量的表面重建。SuGaR通过对高斯函数正则化使其平坦；2DGS将场景表示为一组2D高斯盘，并使用表面法线正则化来重建高质量的表面。但以上问题作者认为质量都有限而且优化速度慢。</p></li><li><p>文章提出，自然场景通常由两种类型的区域组成：</p><ul><li>纹理丰富的</li><li>无纹理的</li><li>对于纹理丰富的，使用多视图一致性约束来引导优化过程；对于无纹理的，结合预训练模型中的法线先验来提供补充监督信号。通过有效的整合这些几何先验，文章的方法实现了高质量和快速表面重建。</li></ul></li><li><p>为了提高优化效率和精度，文章通过迭代合并来强制多视图的一致性。在训练GausSurf时，除了利用输入图像的监督损失外，还将立体匹配引入到高斯函数的优化中。具体来说：</p><ul><li>使用patch-matching算法来细化深度值和法线图，这样可以匹配多视图图像，以便在优化高斯函数时准确定位表面的位置。</li><li>随后，增强的深度和法线将作为几何引导和监督信号，进一步指导高斯函数的优化。</li></ul></li><li><p>传统的MVS里也包含了PatchMatch步骤，但只是在sfm得到的稀疏点云中进行一次。这里的系数点云存在较多的错误点和噪声，因此导致MVS重建质量下降。同时，文章在PatchMatch中还采用了额外的几何验证策略，其中跨多视图的差异超过阈值时，将该点视为错误点而丢弃，这些被丢弃的图像区域意味着他们不包含足够的纹理来进行块匹配，并且无法产生可靠的深度和法线。这些像素归类为无纹理的区域，并在这些区域中使用额外的法线先验用于优化。</p></li><li><p>总结文章的贡献：</p><ul><li>整合了传统的MVS中的PatchMatch方法和法线先验信息，增强重建保真度和计算效率；</li></ul></li></ul><h1>Related Work</h1><ul><li>作者提到一篇：<a href="https://arxiv.org/pdf/2403.16964">Gsdf: 3dgs meets sdf for improved rendering and reconstruction</a>，是把SDF和3DGS结合起来的文章，可以关注一下。</li></ul><h1>Method</h1><h2 id="基于PatchMatch的几何引导">基于PatchMatch的几何引导</h2><ul><li>文章提出了一种reginement and supervision scheme方法，主要是用MVS的几何指导来优化高斯，同时生成更准确的深度和法线图，用于后续MVS优化时的先验。</li><li>具体来说，<ul><li>首先根据超参数（训练步数），先预训练一版高斯函数，作为初始化。</li><li>然后，为所有的训练图像渲染深度图和法线图，然后把这些渲染后的结果送到PatchMatch算法中，进行细化，得到更精确的深度和法线图。</li><li>接下来，这些细化之后的图像再送到高斯模型里，优化指定步数。</li><li>迭代的重复这个过程，直到优化收敛。</li></ul></li></ul><p align="center"><img src="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/patchmatch_based.png" class=""></p><ul><li><p><strong>PatchMatch细化</strong> 从高斯函数中提取深度和法线图。首先把图像中每一个像素的深度和法线方向歘博导其相邻的像素上，按照从上到下，从左到右的顺序。然后对于每一个传播后的像素，使用其本身的深度-法线对和传播后的深度法线对，得到其与相邻视图的块相似度（NCC），然后保留具有更高块相似度的深度法线对。传播后的深度和发现方向会用随机噪声来增强。在传播和patchmatch之后，在做额外的几何验证，来检查不同图像的深度和法线图之间的一致性。 <strong>如果不同视图之间的深度或法线差异大于预先制定的阈值，则该深度或法线将视为不可靠，并从此轮的细化结果中删除。</strong> 整个PatchMatch过层根据相邻视图之间的块一致性来细化深度图，从而大大提高了深度质量。</p></li><li><p><strong>深度监督</strong> PatchMatch之后的深度图用来监督高斯函数的优化，使用L1 loss计算：</p></li></ul><p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">l</mi><mi>d</mi></msub><mo>=</mo><mo>∑</mo><mi mathvariant="normal">∣</mi><msub><mi>d</mi><mi>p</mi></msub><mo>−</mo><msub><mi>d</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">\mathcal{l}_d = \sum |d_p - d_i|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0197em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span></span></p><h2 id="基于法线先验的几何引导">基于法线先验的几何引导</h2><ul><li>作者发现在光滑的表面区域，法线先验可以提供高质量的估计，但是在尖锐特征的地方就会给出太过于平滑的估计，这和PatchMatch正好相反，PatchMatch在边缘可以提供高质量的估计。这里的法线估计方法是用的：<a href="https://stable-x.github.io/StableNormal/">Stablenormal: Reducing diffusion variance for stable and sharp normal</a></li></ul><p align="center"><img src="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/normal_prior.png" class=""></p><h2 id="Loss设计和表面提取">Loss设计和表面提取</h2><ul><li>loss共分为三类：颜色loss，深度loss，法线loss，深度和法线一致性loss。</li><li>表面提取沿用的TSDF</li></ul><h1>Experiment</h1><p align="center"><img src="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/result_1.png" class=""></p><p align="center"><img src="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/result.png" class=""></p>]]></content>
     
     
     <categories>
@@ -55,9 +68,9 @@
       
       <tag>C++</tag>
       
-      <tag>编程</tag>
-      
       <tag>Python</tag>
+      
+      <tag>编程</tag>
       
     </tags>
     
@@ -119,13 +132,13 @@
       
       <tag>机器学习</tag>
       
-      <tag>深度学习</tag>
-      
       <tag>基础知识</tag>
       
       <tag>数学</tag>
       
       <tag>神经网络</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -152,13 +165,13 @@
       
       <tag>机器学习</tag>
       
-      <tag>深度学习</tag>
-      
       <tag>基础知识</tag>
       
       <tag>数学</tag>
       
       <tag>神经网络</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -185,13 +198,13 @@
       
       <tag>机器学习</tag>
       
-      <tag>深度学习</tag>
-      
       <tag>基础知识</tag>
       
       <tag>数学</tag>
       
       <tag>神经网络</tag>
+      
+      <tag>深度学习</tag>
       
       <tag>激活函数</tag>
       
@@ -220,13 +233,13 @@
       
       <tag>机器学习</tag>
       
-      <tag>深度学习</tag>
-      
       <tag>基础知识</tag>
       
       <tag>数学</tag>
       
       <tag>神经网络</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -301,7 +314,7 @@
     <link href="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/"/>
     <url>/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/</url>
     
-    <content type="html"><![CDATA[<h1>相关文档</h1><ul><li>代码链接：<a href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li></ul><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png" class=""></p><h1>Introduction</h1><ul><li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li><li>同时可以估计外参</li><li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法<ul><li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li><li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li></ul></li><li>因此 RoME 的方法是：<ul><li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li><li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li></ul></li></ul><h1>Approaches</h1><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png" class="" title="method"></p><ul><li>主要分成三个部分，waypoints 采样、Mesh 初始化和优化</li><li>常用的术语和定义为：<ul><li>3D point cloud：点云，包含了空间中的所有点，每个点都有对应的坐标和颜色信息</li></ul></li></ul><h2 id=""></h2>]]></content>
+    <content type="html"><![CDATA[<h1>相关文档</h1><ul><li>代码链接：<a href="https://github.com/DRosemei/RoMe">https://github.com/DRosemei/RoMe</a></li><li>论文链接：<a href="https://arxiv.org/pdf/2306.11368">https://arxiv.org/pdf/2306.11368</a></li></ul><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/rome.png" class=""></p><h1>Introduction</h1><ul><li>提出 waypioint 采样方法，每个只渲染局部的区域，然后再合并到一起</li><li>同时可以估计外参</li><li>作者提到道路表面的重建可以辅助 BEV 模型的训练和验证，目前主要分为两种方法：传统的方法和基于 NeRF 的方法<ul><li>传统方法包括 MVS，可以生成稠密点云，但要求有清晰的纹理特征。在处理均匀纹理时可能出现噪点或者不完整的结果（空洞？），并且计算量很大</li><li>NeRF-based 的方法，使用 MLP 做隐式表达，输入一组带 pose 的图像，可以生成对应的高质量纹理，但需要大量的 GPU 资源，不太好适应大尺度的场景。</li></ul></li><li>因此 RoME 的方法是：<ul><li>提出了一个 2D 的隐式路面表达方法，来实现道路表面的重建</li><li>使用 waypoint 采样的方法，来降低内存和时间复杂度</li></ul></li></ul><h1>Approaches</h1><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/method.png" class="" title="method"></p><ul><li>主要分成三个部分，Mesh 初始化、waypoints 采样、和优化</li></ul><h2 id="Mesh-Initialization">Mesh Initialization</h2><ul><li>文章使用ORB-SLAM2的pose来初始化mesh。文章使用ORB-SLAM得到相机的每一帧位姿，同时使用Mask2Former来分割语义信息。</li><li>Mesh初始化的方法主要参考：<a href="https://ventusff.github.io/streetsurf_web/">StreetSurf</a><ul><li>水平延伸自车位姿来得到半稠密的点云，然后把些点放到一个MLP网络中，输入xy的坐标，输出z值（用MLP来拟合一个地面表示）。并对xy的值做位置编码，用MLP是为了通过调整PE的评率来控制路面的平滑度</li></ul></li></ul><p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>=</mo><mi>M</mi><mi>L</mi><mi>P</mi><mo stretchy="false">(</mo><mi>P</mi><mi>E</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z = MLP(PE(x, y))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">PE</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">))</span></span></span></span></span></p><h2 id="Waypoint-Sampling">Waypoint Sampling</h2><ul><li>这里使用<strong>最远点采样</strong>的方法对输入的相机pose做了一次采样，每次选取部分采样点后，就只用这几个图片训练当前epoch就行了，而不需要全部图片。</li></ul><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/waypoint_sample.png" class=""></p><ul><li><strong>个人认为</strong>，这里的采样除了可以加速以外，还有一个原因是因为用的ORB-SLAM的位姿，这个位姿会有误差，如果全部图片都用上的话，模型不太能把位置误差估计出来，导致有重影。而经过位置采样后，每个epoch中，每个范围只由一张image来训练，其他的误差不会引入进来，最后渲染的mesh就会更清晰。</li></ul><h2 id="Optimization">Optimization</h2><ul><li>优化了两个部分，外参优化和RGB+语义的Mesh优化</li></ul><h3 id="外参优化">外参优化</h3><ul><li>旋转矩阵用轴和轴角表示。在优化中同时估计旋转和平移，来实现外参优化。</li><li>使用Rodrigues公式，将轴角表示的旋转矩阵转换为旋转向量</li></ul><p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mo>=</mo><mi>I</mi><mo>+</mo><mfrac><mrow><mi>sin</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo></mrow><mi>α</mi></mfrac><msup><mi>ϕ</mi><mover accent="true"><mrow></mrow><mo>^</mo></mover></msup><mo>+</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mi>cos</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo></mrow><msup><mi>α</mi><mn>2</mn></msup></mfrac><mo stretchy="false">(</mo><msup><mi>ϕ</mi><mover accent="true"><mrow></mrow><mo>^</mo></mover></msup><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">R = I + \frac{\sin(\alpha)}{\alpha}  \phi^{\hat{}} + \frac{1 - \cos(\alpha)}{\alpha^2}  (\phi^{\hat{}})^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">sin</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal">ϕ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">^</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mop">cos</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">ϕ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">^</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p><p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mo>∗</mo><msup><mo stretchy="false">)</mo><mover accent="true"><mrow></mrow><mo>^</mo></mover></msup></mrow><annotation encoding="application/x-tex">(*)^{\hat{}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">∗</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">^</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>表示向量转成反对称矩阵</p><h3 id="Mesh优化">Mesh优化</h3><ul><li>使用当前mesh来渲染waypoint的图像，然后RGB使用L1 Loss，语义信息使用交叉熵Loss</li></ul><h1>Result</h1><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_1.png" class=""></p><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_2.png" class=""></p><p align="center"><img src="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/result_3.png" class=""></p>]]></content>
     
     
     <categories>
@@ -503,13 +516,13 @@
       
       <tag>MLP</tag>
       
-      <tag>深度学习</tag>
-      
       <tag>基础知识</tag>
       
       <tag>数学</tag>
       
       <tag>神经网络</tag>
+      
+      <tag>深度学习</tag>
       
       <tag>激活函数</tag>
       
