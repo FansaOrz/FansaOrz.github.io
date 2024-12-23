@@ -19,22 +19,22 @@
     <meta name="description" content="深度学习和NeRF中常用的Loss函数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Loss函数">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/23/Loss%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:url" content="https://fansaorz.github.io/2024/08/17/Loss%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
 <meta property="og:description" content="深度学习和NeRF中常用的Loss函数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fansaorz.github.io/2024/12/23/Loss%E5%87%BD%E6%95%B0/loss.png">
-<meta property="article:published_time" content="2024-12-23T12:32:51.000Z">
-<meta property="article:modified_time" content="2024-12-23T12:46:51.068Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/08/17/Loss%E5%87%BD%E6%95%B0/loss.png">
+<meta property="article:published_time" content="2024-08-17T12:32:51.000Z">
+<meta property="article:modified_time" content="2024-12-23T13:55:40.377Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="基础知识">
 <meta property="article:tag" content="数学">
 <meta property="article:tag" content="神经网络">
 <meta property="article:tag" content="深度学习">
-<meta property="article:tag" content="激活函数">
+<meta property="article:tag" content="Loss函数">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/23/Loss%E5%87%BD%E6%95%B0/loss.png">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/08/17/Loss%E5%87%BD%E6%95%B0/loss.png">
   
   
   
@@ -234,8 +234,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-23 20:32" pubdate>
-          2024年12月23日 晚上
+        <time datetime="2024-08-17 20:32" pubdate>
+          2024年8月17日 晚上
         </time>
       </span>
     
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          4.6k 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          31 分钟
+          39 分钟
         
       </span>
     
@@ -315,7 +315,7 @@
         aria-expanded="true"
       >
         机器学习
-        <span class="list-group-count">(7)</span>
+        <span class="list-group-count">(8)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -338,9 +338,18 @@
     
       
       
-        <a href="/2024/12/23/Loss%E5%87%BD%E6%95%B0/" title="Loss函数"
+        <a href="/2024/08/17/Loss%E5%87%BD%E6%95%B0/" title="Loss函数"
            class="list-group-item list-group-item-action
            active">
+          <span class="category-post">Loss函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/17/Cross-Attention/" title="Loss函数"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Loss函数</span>
         </a>
       
@@ -414,8 +423,43 @@
             
               <div class="markdown-body">
                 
-                <p align="center"><img src="/2024/12/23/Loss%E5%87%BD%E6%95%B0/loss.png" srcset="/img/loading.gif" lazyload class=""></p>
+                <p align="center"><img src="/2024/08/17/Loss%E5%87%BD%E6%95%B0/loss.png" srcset="/img/loading.gif" lazyload class=""></p>
 <h1>L1 Loss</h1>
+<ul>
+<li>L1 Loss，即<strong>绝对值误差</strong>。</li>
+<li>公式：<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>L1Loss</mtext><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mi>i</mi><mi>n</mi></munderover><mi mathvariant="normal">∣</mi><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">\text{L1Loss}(x, y) =\frac{1}{n}\sum_{i}^{n} |y_i - f(x_i)|
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">L1Loss</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.9291em;vertical-align:-1.2777em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">∣</span></span></span></span></span></p>
+</li>
+<li>L1 loss在零点不平滑，用的较少。在回归和简单的模型中使用</li>
+</ul>
+<h1>L2 Loss</h1>
+<ul>
+<li>L2 Loss，即<strong>均方误差</strong>。</li>
+<li>公式：<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>L2Loss</mtext><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mi>i</mi><mi>n</mi></munderover><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\text{L2Loss}(x, y) =\frac{1}{n}\sum_{i}^{n} (y_i - f(x_i))^2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">L2Loss</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.9291em;vertical-align:-1.2777em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
+</li>
+<li>在回归任务；数值特征不大；问题维度不高时使用</li>
+</ul>
+<h1>Smooth L1 Loss</h1>
+<ul>
+<li>
+<p>Smooth L1 Loss，即<strong>平滑L1损失</strong>。</p>
+</li>
+<li>
+<p>公式：</p>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>SmoothL1Loss</mtext><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.36em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>0.5</mn><mo stretchy="false">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>i</mi><mi>f</mi><mspace width="1em"/><mi mathvariant="normal">∣</mi><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mo>&lt;</mo><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi mathvariant="normal">∣</mi><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mo>−</mo><mn>0.5</mn></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>o</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>w</mi><mi>i</mi><mi>s</mi><mi>e</mi></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">\text{SmoothL1Loss}(x, y) = \begin{cases}0.5(y_i-f(x_i))^2 &amp; if \quad|y_i-f(x_i)| &lt; 1 \\ |y_i - f(x_i)| - 0.5 &amp; otherwise \end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">SmoothL1Loss</span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3em;vertical-align:-1.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">0.5</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">0.5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:1em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:1em;"></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">1</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">i</span><span class="mord mathnormal">se</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+<li>
+<p>平滑版的L1 Loss。仔细观察可以看到，当预测值和ground truth差别较小的时候（绝对值差小于1），其实使用的是L2 Loss；而当差别大的时候，是L1 Loss的平移。Smoooth L1 Loss其实是L2 Loss和L1 Loss的结合，它同时拥有L2 Loss和L1 Loss的部分优点。</p>
+</li>
+<li>
+<p>当预测值和ground truth差别较小的时候（绝对值差小于1），梯度不至于太大。（损失函数相较L1 Loss比较圆滑）</p>
+</li>
+<li>
+<p>当差别大的时候，梯度值足够小（较稳定，不容易梯度爆炸）。</p>
+</li>
+</ul>
 <h1>SSIM Loss</h1>
 <ul>
 <li>Structural Similarity (SSIM)，即<strong>结构相似性</strong>。是用来衡量两张图片的质量的一种指标。</li>
@@ -514,6 +558,7 @@ D_{KL}(p||q) &amp;= \sum_{j=1}^np(x_j)\ln p(x_j) - \sum_{j=1}^np(x_j)\ln q(x_j) 
 <h1>参考文档</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://microsoft.github.io/ai-edu/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/A2-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/%E7%AC%AC1%E6%AD%A5%20-%20%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/03.2-%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">交叉熵损失函数</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/AirCL/p/17287763.html">Deep Learning】L1 Loss、L2 Loss、Smooth L1 Loss</a></li>
 </ul>
 
                 
@@ -558,7 +603,7 @@ D_{KL}(p||q) &amp;= \sum_{j=1}^np(x_j)\ln p(x_j) - \sum_{j=1}^np(x_j)\ln q(x_j) 
       
         <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
       
-        <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/">#激活函数</a>
+        <a href="/tags/Loss%E5%87%BD%E6%95%B0/">#Loss函数</a>
       
     </div>
   
@@ -571,7 +616,7 @@ D_{KL}(p||q) &amp;= \sum_{j=1}^np(x_j)\ln p(x_j) - \sum_{j=1}^np(x_j)\ln q(x_j) 
   <div class="license-box my-3">
     <div class="license-title">
       <div>Loss函数</div>
-      <div>https://fansaorz.github.io/2024/12/23/Loss函数/</div>
+      <div>https://fansaorz.github.io/2024/08/17/Loss函数/</div>
     </div>
     <div class="license-meta">
       
@@ -583,7 +628,7 @@ D_{KL}(p||q) &amp;= \sum_{j=1}^np(x_j)\ln p(x_j) - \sum_{j=1}^np(x_j)\ln q(x_j) 
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月23日</div>
+          <div>2024年8月17日</div>
         </div>
       
       
@@ -615,12 +660,18 @@ D_{KL}(p||q) &amp;= \sum_{j=1}^np(x_j)\ln p(x_j) - \sum_{j=1}^np(x_j)\ln q(x_j) 
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/08/18/%E4%B8%8B%E9%87%87%E6%A0%B7%E5%92%8C%E4%B8%8A%E9%87%87%E6%A0%B7/" title="常用上采样方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">常用上采样方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="GausSurf学习笔记">
-                        <span class="hidden-mobile">GausSurf学习笔记</span>
+                      <a href="/2024/08/17/Cross-Attention/" title="Loss函数">
+                        <span class="hidden-mobile">Loss函数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

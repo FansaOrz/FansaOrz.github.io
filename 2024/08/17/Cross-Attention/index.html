@@ -16,23 +16,40 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Jiashi的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://fansaorz.github.io/categories/index.html">
+    <meta name="description" content="Cross-Attention介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Loss函数">
+<meta property="og:url" content="https://fansaorz.github.io/2024/08/17/Cross-Attention/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="Jiashi的个人博客">
+<meta property="og:description" content="Cross-Attention介绍">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-17T12:32:51.000Z">
+<meta property="article:modified_time" content="2024-12-23T13:56:14.782Z">
 <meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="基础知识">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Attention">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>分类 - Jiashi Blog</title>
+  <title>Loss函数 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -99,7 +116,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -205,9 +222,57 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="分类"></span>
+            <span id="subtitle" data-typed-text="Loss函数"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-17 20:32" pubdate>
+          2024年8月17日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          0 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          1 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
 
         
       </div>
@@ -223,14 +288,14 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
 
 
 
@@ -243,22 +308,17 @@
     
     
     <div class="category row nomargin-x">
-      <a class="category-item collapsed
+      <a class="category-item 
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="机器学习"
         id="heading-61bb1751fd355596e307767d1927c855" role="tab" data-toggle="collapse" href="#collapse-61bb1751fd355596e307767d1927c855"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         机器学习
-        <span class="list-group-count"></span>
+        <span class="list-group-count">(8)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-        <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>8</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-61bb1751fd355596e307767d1927c855"
+      <div class="category-collapse collapse show" id="collapse-61bb1751fd355596e307767d1927c855"
            role="tabpanel" aria-labelledby="heading-61bb1751fd355596e307767d1927c855">
         
         
@@ -268,28 +328,10 @@
     
       
       
-        <a href="/2024/08/31/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Transformer学习笔记"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Transformer学习笔记</span>
-        </a>
-      
-    
-      
-      
         <a href="/2024/08/18/Batch-Normalization%E4%BB%8B%E7%BB%8D/" title="Batch Normalization介绍"
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">Batch Normalization介绍</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/08/18/%E4%B8%8B%E9%87%87%E6%A0%B7%E5%92%8C%E4%B8%8A%E9%87%87%E6%A0%B7/" title="常用上采样方法"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">常用上采样方法</span>
         </a>
       
     
@@ -306,17 +348,17 @@
       
         <a href="/2024/08/17/Cross-Attention/" title="Loss函数"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">Loss函数</span>
         </a>
       
     
       
       
-        <a href="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/" title="激活函数不以零为中心的问题"
+        <a href="/2024/08/31/Transformer%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Transformer学习笔记"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">激活函数不以零为中心的问题</span>
+          <span class="category-post">Transformer学习笔记</span>
         </a>
       
     
@@ -331,6 +373,15 @@
     
       
       
+        <a href="/2024/08/18/%E4%B8%8B%E9%87%87%E6%A0%B7%E5%92%8C%E4%B8%8A%E9%87%87%E6%A0%B7/" title="常用上采样方法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">常用上采样方法</span>
+        </a>
+      
+    
+      
+      
         <a href="/2023/02/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="机器学习相关基础概念"
            class="list-group-item list-group-item-action
            ">
@@ -338,243 +389,12 @@
         </a>
       
     
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="视觉重建"
-        id="heading-f56b0c996144ca6a4d009ac78a0171c6" role="tab" data-toggle="collapse" href="#collapse-f56b0c996144ca6a4d009ac78a0171c6"
-        aria-expanded="false"
-      >
-        视觉重建
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>5</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-f56b0c996144ca6a4d009ac78a0171c6"
-           role="tabpanel" aria-labelledby="heading-f56b0c996144ca6a4d009ac78a0171c6">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
       
       
-        <a href="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="GausSurf学习笔记"
+        <a href="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/" title="激活函数不以零为中心的问题"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">GausSurf学习笔记</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/05/11/2DGS%E8%AF%A6%E8%A7%A3/" title="2DGS学习笔记"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">2DGS学习笔记</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/" title="ROME学习笔记"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">ROME学习笔记</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">3D Gaussian Splatting学习笔记</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/" title="NeRF学习笔记"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">NeRF学习笔记</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="工具使用"
-        id="heading-f9513da884f0c50f60fcee13e0e8a92e" role="tab" data-toggle="collapse" href="#collapse-f9513da884f0c50f60fcee13e0e8a92e"
-        aria-expanded="false"
-      >
-        工具使用
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>4</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-f9513da884f0c50f60fcee13e0e8a92e"
-           role="tabpanel" aria-labelledby="heading-f9513da884f0c50f60fcee13e0e8a92e">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/" title="Ubuntu使用Proxychains实现终端代理"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Ubuntu使用Proxychains实现终端代理</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/02/16/Ubuntu-Clash/" title="Ubuntu系统中Clash的使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Ubuntu系统中Clash的使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/02/12/docker%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BD%BF%E7%94%A8/" title="docker安装及使用"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">docker安装及使用</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2023/02/09/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="Hexo+Github搭建个人博客"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Hexo+Github搭建个人博客</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="编程"
-        id="heading-41282bf95e43c64d579757573a03cdde" role="tab" data-toggle="collapse" href="#collapse-41282bf95e43c64d579757573a03cdde"
-        aria-expanded="false"
-      >
-        编程
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/%E7%BC%96%E7%A8%8B/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>2</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-41282bf95e43c64d579757573a03cdde"
-           role="tabpanel" aria-labelledby="heading-41282bf95e43c64d579757573a03cdde">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2024/12/07/%E5%B8%B8%E8%A7%81%E5%87%A0%E4%BD%95%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="常见几何计算问题及代码实现"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">常见几何计算问题及代码实现</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2024/04/20/CUDA%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="CUDA编程基础"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">CUDA编程基础</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="面经"
-        id="heading-74a815616346a9f80558ba334cfc9fa6" role="tab" data-toggle="collapse" href="#collapse-74a815616346a9f80558ba334cfc9fa6"
-        aria-expanded="false"
-      >
-        面经
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>1</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-74a815616346a9f80558ba334cfc9fa6"
-           role="tabpanel" aria-labelledby="heading-74a815616346a9f80558ba334cfc9fa6">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2023/02/10/SLAM%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E7%BB%8F/" title="SLAM算法工程师面经"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">SLAM算法工程师面经</span>
+          <span class="category-post">激活函数不以零为中心的问题</span>
         </a>
       
     
@@ -587,11 +407,234 @@
 </div>
 
 
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Loss函数</h1>
+            
+            
+              <div class="markdown-body">
+                
+                
+                
               </div>
-            </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
+      
+        <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">#基础知识</a>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
+      
+        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">#神经网络</a>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
+      
+        <a href="/tags/Attention/">#Attention</a>
+      
+        <a href="/tags/Transformer/">#Transformer</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Loss函数</div>
+      <div>https://fansaorz.github.io/2024/08/17/Cross-Attention/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jiashi Zhang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
           </div>
         </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/17/Loss%E5%87%BD%E6%95%B0/" title="Loss函数">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Loss函数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/17/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BB%A5%E9%9B%B6%E4%B8%BA%E4%B8%AD%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98/" title="激活函数不以零为中心的问题">
+                        <span class="hidden-mobile">激活函数不以零为中心的问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"F6F3aER7Bp312kQVxqaLhS8e-gzGzoHsz","appKey":"qGr8lKhZ4MUvmbRkeAmsdEtW","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
       </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
     
 
     
@@ -710,6 +753,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script defer src="/js/leancloud.js" ></script>
 
