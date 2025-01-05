@@ -16,29 +16,25 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Sigmoid激活函数不以零为中心，为什么会导致收敛变慢">
+    <meta name="description" content="SuGaR: Surface-Aligned Gaussian Splatting for Efficient 3D Mesh Reconstruction and High-Quality Mesh Rendering 一种准确快速的从3DGS中提取mesh的方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见后处理和实现">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/24/%E5%B8%B8%E8%A7%81%E5%90%8E%E5%A4%84%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="SuGaR阅读笔记">
+<meta property="og:url" content="https://fansaorz.github.io/2024/12/27/SuGaR%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="Sigmoid激活函数不以零为中心，为什么会导致收敛变慢">
+<meta property="og:description" content="SuGaR: Surface-Aligned Gaussian Splatting for Efficient 3D Mesh Reconstruction and High-Quality Mesh Rendering 一种准确快速的从3DGS中提取mesh的方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-24T14:00:19.000Z">
-<meta property="article:modified_time" content="2024-12-27T14:54:56.147Z">
+<meta property="article:published_time" content="2024-12-27T15:40:56.000Z">
+<meta property="article:modified_time" content="2024-12-27T15:57:30.284Z">
 <meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="基础知识">
-<meta property="article:tag" content="数学">
-<meta property="article:tag" content="神经网络">
-<meta property="article:tag" content="深度学习">
-<meta property="article:tag" content="后处理">
-<meta property="article:tag" content="NWS">
-<meta property="article:tag" content="WBF">
+<meta property="article:tag" content="MLP">
+<meta property="article:tag" content="论文解读">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>常见后处理和实现 - Jiashi Blog</title>
+  <title>SuGaR阅读笔记 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -223,7 +219,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="常见后处理和实现"></span>
+            <span id="subtitle" data-typed-text="SuGaR阅读笔记"></span>
           
         </div>
 
@@ -234,8 +230,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-24 22:00" pubdate>
-          2024年12月24日 晚上
+        <time datetime="2024-12-27 23:40" pubdate>
+          2024年12月27日 晚上
         </time>
       </span>
     
@@ -246,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          366 字
         
       </span>
     
@@ -257,7 +253,7 @@
         
         
         
-          1 分钟
+          4 分钟
         
       </span>
     
@@ -303,12 +299,25 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">常见后处理和实现</h1>
+            <h1 style="display: none">SuGaR阅读笔记</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <p align="center"></p>
+<h1>相关文档</h1>
+<ul>
+<li>项目链接：<a target="_blank" rel="noopener" href="https://anttwo.github.io/sugar/">https://anttwo.github.io/sugar/</a></li>
+<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/Anttwo/SuGaR">https://github.com/Anttwo/SuGaR</a></li>
+<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2311.12775">https://arxiv.org/pdf/2311.12775</a></li>
+</ul>
+<h1>Introduction</h1>
+<ul>
+<li>作者首先表明，3DGS优化后的结果，高斯函数没有一个有序的结构，并且和场景的实际表面不能很好的对齐。当然除了表面之外，整个场景也需要Mesh的表示形式，这样可以用一些其他的3D建模软件来编辑。</li>
+<li>针对这个问题，作者首先提出正则化项来鼓励高斯在场景的表面上均匀分布，以此来捕捉到更好的表面结构。首先做一个假设，高斯函数函数是平坦的，并且在场景表面上均匀分布的。然后从高斯函数中提取体密度，并优化它和实际计算出来的高斯密度的差，最终让高斯函数在表面上均匀分布。（具体做法需要往后再看一下）。</li>
+<li></li>
+</ul>
+
                 
               </div>
             
@@ -326,7 +335,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
   
   
 
@@ -341,21 +350,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
+      
         <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
       
-        <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">#基础知识</a>
+        <a href="/tags/MLP/">#MLP</a>
       
-        <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
-      
-        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">#神经网络</a>
-      
-        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
-      
-        <a href="/tags/%E5%90%8E%E5%A4%84%E7%90%86/">#后处理</a>
-      
-        <a href="/tags/NWS/">#NWS</a>
-      
-        <a href="/tags/WBF/">#WBF</a>
+        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
       
     </div>
   
@@ -367,8 +368,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>常见后处理和实现</div>
-      <div>https://fansaorz.github.io/2024/12/24/常见后处理和实现/</div>
+      <div>SuGaR阅读笔记</div>
+      <div>https://fansaorz.github.io/2024/12/27/SuGaR阅读笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -380,7 +381,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月24日</div>
+          <div>2024年12月27日</div>
         </div>
       
       

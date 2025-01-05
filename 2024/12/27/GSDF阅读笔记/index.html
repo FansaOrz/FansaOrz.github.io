@@ -16,29 +16,27 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Sigmoid激活函数不以零为中心，为什么会导致收敛变慢">
+    <meta name="description" content="GSDF: 3DGS Meets SDF for Improved Neural Rendering and Reconstruction">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见后处理和实现">
-<meta property="og:url" content="https://fansaorz.github.io/2024/12/24/%E5%B8%B8%E8%A7%81%E5%90%8E%E5%A4%84%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="GSDF阅读笔记">
+<meta property="og:url" content="https://fansaorz.github.io/2024/12/27/GSDF%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="Sigmoid激活函数不以零为中心，为什么会导致收敛变慢">
+<meta property="og:description" content="GSDF: 3DGS Meets SDF for Improved Neural Rendering and Reconstruction">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-24T14:00:19.000Z">
-<meta property="article:modified_time" content="2024-12-27T14:54:56.147Z">
+<meta property="og:image" content="https://fansaorz.github.io/2024/12/27/GSDF%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/excerpt.png">
+<meta property="article:published_time" content="2024-12-27T14:54:04.000Z">
+<meta property="article:modified_time" content="2024-12-27T15:43:15.302Z">
 <meta property="article:author" content="Jiashi Zhang">
+<meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
-<meta property="article:tag" content="基础知识">
-<meta property="article:tag" content="数学">
-<meta property="article:tag" content="神经网络">
-<meta property="article:tag" content="深度学习">
-<meta property="article:tag" content="后处理">
-<meta property="article:tag" content="NWS">
-<meta property="article:tag" content="WBF">
+<meta property="article:tag" content="MLP">
+<meta property="article:tag" content="论文解读">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fansaorz.github.io/2024/12/27/GSDF%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/excerpt.png">
   
   
   
-  <title>常见后处理和实现 - Jiashi Blog</title>
+  <title>GSDF阅读笔记 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -223,7 +221,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="常见后处理和实现"></span>
+            <span id="subtitle" data-typed-text="GSDF阅读笔记"></span>
           
         </div>
 
@@ -234,8 +232,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-24 22:00" pubdate>
-          2024年12月24日 晚上
+        <time datetime="2024-12-27 22:54" pubdate>
+          2024年12月27日 晚上
         </time>
       </span>
     
@@ -246,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          787 字
         
       </span>
     
@@ -257,7 +255,7 @@
         
         
         
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -295,6 +293,112 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="视觉重建"
+        id="heading-f56b0c996144ca6a4d009ac78a0171c6" role="tab" data-toggle="collapse" href="#collapse-f56b0c996144ca6a4d009ac78a0171c6"
+        aria-expanded="true"
+      >
+        视觉重建
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f56b0c996144ca6a4d009ac78a0171c6"
+           role="tabpanel" aria-labelledby="heading-f56b0c996144ca6a4d009ac78a0171c6">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/05/11/2DGS%E8%AF%A6%E8%A7%A3/" title="2DGS学习笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">2DGS学习笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">3D Gaussian Splatting学习笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/01/05/DUSt3R%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="DUSt3R阅读笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">DUSt3R阅读笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/12/27/GSDF%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="GSDF阅读笔记"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">GSDF阅读笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="GausSurf学习笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GausSurf学习笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/" title="NeRF学习笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">NeRF学习笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/14/ROME%E8%AF%A6%E8%A7%A3/" title="ROME学习笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ROME学习笔记</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -303,12 +407,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">常见后处理和实现</h1>
+            <h1 style="display: none">GSDF阅读笔记</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <p align="center"><img src="/2024/12/27/GSDF%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/excerpt.png" srcset="/img/loading.gif" lazyload class=""></p>
+<h1>相关文档</h1>
+<ul>
+<li>项目链接：<a target="_blank" rel="noopener" href="https://city-super.github.io/GSDF/">https://city-super.github.io/GSDF/</a></li>
+<li>代码链接：<a target="_blank" rel="noopener" href="https://github.com/city-super/GSDF">https://github.com/city-super/GSDF</a></li>
+<li>论文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2403.16964">https://arxiv.org/pdf/2403.16964</a></li>
+</ul>
+<h1>Introduction</h1>
+<ul>
+<li>作者提出，目前的视觉重建方法在物体的几何精度和画面的渲染精度上有一个“优先级匹配”的问题，目前二者是耦合在一起的，如果我们为这个系统整体添加正则项或者约束，可能某一个方面的质量会提升，而另一个方面则会下降。</li>
+<li>目前已经有一些方法试图解决这个问题，例如：Neusg和Sugar都是用2维的扁平高斯基元进行表面重建。Sugar使用了强制二元不透明度，Neusg使用联合学习的NeuS模型来正则化属性，但是这些约束都导致了渲染质量的下降。</li>
+<li>然而，诸如Adaptive Shell（自适应壳[Adaptive shells for efficient neural radiance field rendering]），Binary Occupancy Field（二元占用场[Binary opacity grids: Capturing fine geometric detail for mesh-based view synthesis]）和Scaffold-GS都表明，通过融合几何引导，可以生成具有良好正则化的空间结构，进而显著的提升渲染质量。（TODO：没太看懂这块，先往后看，再回来修改）</li>
+<li>基于以上见解，作者提出了一个同时优化的双分支（Dual-branches）系统，分别是用于做渲染的3DGS分支和用于做表面重建的SDF分支。主要做了三个改进：
+<ul>
+<li>从3DGS分支的光栅化深度来引导SDF分支的光线采样，加强提渲染的效率和避免局部最小值</li>
+<li>用SDF来控制3DFS的密度，引导3DGS在表面附近的增长，在其他地方剪枝</li>
+<li>对齐两个branch的几何结构（深度和法向）</li>
+</ul>
+</li>
+</ul>
+
                 
               </div>
             
@@ -326,7 +450,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  <a href="/categories/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/" class="category-chain-item">视觉重建</a>
   
   
 
@@ -341,21 +465,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E8%A7%86%E8%A7%89%E9%87%8D%E5%BB%BA/">#视觉重建</a>
+      
         <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>
       
-        <a href="/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">#基础知识</a>
+        <a href="/tags/MLP/">#MLP</a>
       
-        <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
-      
-        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">#神经网络</a>
-      
-        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
-      
-        <a href="/tags/%E5%90%8E%E5%A4%84%E7%90%86/">#后处理</a>
-      
-        <a href="/tags/NWS/">#NWS</a>
-      
-        <a href="/tags/WBF/">#WBF</a>
+        <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
       
     </div>
   
@@ -367,8 +483,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>常见后处理和实现</div>
-      <div>https://fansaorz.github.io/2024/12/24/常见后处理和实现/</div>
+      <div>GSDF阅读笔记</div>
+      <div>https://fansaorz.github.io/2024/12/27/GSDF阅读笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -380,7 +496,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月24日</div>
+          <div>2024年12月27日</div>
         </div>
       
       
@@ -407,6 +523,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/05/DUSt3R%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="DUSt3R阅读笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">DUSt3R阅读笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/07/GausSurf%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="GausSurf学习笔记">
+                        <span class="hidden-mobile">GausSurf学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
