@@ -16,25 +16,27 @@
   <meta name="author" content="Jiashi Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="对NeRF的原理和代码进行详细解读">
+    <meta name="description" content="DUSt3R: Geometric 3D Vision Made Easy 数据驱动的重建方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NeRF学习笔记">
-<meta property="og:url" content="https://fansaorz.github.io/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="MASt3R\阅读笔记">
+<meta property="og:url" content="https://fansaorz.github.io/2025/01/12/MASt3R-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Jiashi Blog">
-<meta property="og:description" content="对NeRF的原理和代码进行详细解读">
+<meta property="og:description" content="DUSt3R: Geometric 3D Vision Made Easy 数据驱动的重建方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-06T09:38:53.000Z">
-<meta property="article:modified_time" content="2024-12-14T04:44:21.913Z">
+<meta property="article:published_time" content="2025-01-12T06:00:59.000Z">
+<meta property="article:modified_time" content="2025-01-12T06:01:13.642Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="MLP">
 <meta property="article:tag" content="论文解读">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>NeRF学习笔记 - Jiashi Blog</title>
+  <title>MASt3R\阅读笔记 - Jiashi Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +221,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="NeRF学习笔记"></span>
+            <span id="subtitle" data-typed-text="MASt3R\阅读笔记"></span>
           
         </div>
 
@@ -230,8 +232,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-04-06 17:38" pubdate>
-          2024年4月6日 下午
+        <time datetime="2025-01-12 14:00" pubdate>
+          2025年1月12日 下午
         </time>
       </span>
     
@@ -372,7 +374,7 @@
       
         <a href="/2025/01/12/MASt3R-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="MASt3R\阅读笔记"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">MASt3R\阅读笔记</span>
         </a>
       
@@ -381,7 +383,7 @@
       
         <a href="/2024/04/06/NeRF%E8%AF%A6%E8%A7%A3/" title="NeRF学习笔记"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">NeRF学习笔记</span>
         </a>
       
@@ -414,7 +416,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">NeRF学习笔记</h1>
+            <h1 style="display: none">MASt3R\阅读笔记</h1>
             
             
               <div class="markdown-body">
@@ -460,6 +462,10 @@
       
         <a href="/tags/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">#论文解读</a>
       
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
+      
+        <a href="/tags/Transformer/">#Transformer</a>
+      
     </div>
   
 </div>
@@ -470,8 +476,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>NeRF学习笔记</div>
-      <div>https://fansaorz.github.io/2024/04/06/NeRF详解/</div>
+      <div>MASt3R\阅读笔记</div>
+      <div>https://fansaorz.github.io/2025/01/12/MASt3R-阅读笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -483,7 +489,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年4月6日</div>
+          <div>2025年1月12日</div>
         </div>
       
       
@@ -515,18 +521,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/13/3D-Gaussian-Splatting%E8%AF%A6%E8%A7%A3/" title="3D Gaussian Splatting学习笔记">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">3D Gaussian Splatting学习笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/17/Ubuntu%E4%BD%BF%E7%94%A8Proxychain%E5%AE%9E%E7%8E%B0%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86/" title="Ubuntu使用Proxychains实现终端代理">
-                        <span class="hidden-mobile">Ubuntu使用Proxychains实现终端代理</span>
+                      <a href="/2025/01/12/ViT%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="ViT阅读笔记">
+                        <span class="hidden-mobile">ViT阅读笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
