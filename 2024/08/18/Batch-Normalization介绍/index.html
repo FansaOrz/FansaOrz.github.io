@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fansaorz.github.io/2024/08/18/Batch-Normalization%E4%BB%8B%E7%BB%8D/bn.png">
 <meta property="article:published_time" content="2024-08-18T05:42:53.000Z">
-<meta property="article:modified_time" content="2024-12-14T07:46:30.111Z">
+<meta property="article:modified_time" content="2025-02-04T10:55:00.155Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="基础知识">
@@ -314,7 +314,7 @@
         aria-expanded="true"
       >
         机器学习
-        <span class="list-group-count">(9)</span>
+        <span class="list-group-count">(10)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -332,6 +332,15 @@
            class="list-group-item list-group-item-action
            active">
           <span class="category-post">Batch Normalization介绍</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/02/01/CLIP%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="CLIP论文阅读笔记（力大转飞的视觉-文本多模态网络）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CLIP论文阅读笔记（力大转飞的视觉-文本多模态网络）</span>
         </a>
       
     
@@ -485,10 +494,12 @@
 </ul>
 <h2 id="防止过拟合">防止过拟合</h2>
 <ul>
-<li>在网络的训练中，BN的使用使得一个minibatch中所有样本都被关联在了一起，因此网络不会从某一个训练样本中生成确定的结果，即同样一个样本的输出不再仅仅取决于样本的本身，也取决于跟这个样本同属一个batch的其他样本，而每次网络都是随机取batch，这样就会使得整个网络不会朝这一个方向使劲学习。一定程度上避免了过拟合。</li>
-</ul>
-<ul>
-<li>BN层最重要的作用是加速网络的收敛速度，同时也让网络训练变得更加容易；另外调参过程也简单很多，对于初始化要求没那么高，而且可以使用大的学习率。</li>
+<li>
+<p>在网络的训练中，BN的使用使得一个minibatch中所有样本都被关联在了一起，因此网络不会从某一个训练样本中生成确定的结果，即同样一个样本的输出不再仅仅取决于样本的本身，也取决于跟这个样本同属一个batch的其他样本，而每次网络都是随机取batch，这样就会使得整个网络不会朝这一个方向使劲学习。一定程度上避免了过拟合。</p>
+</li>
+<li>
+<p>BN层最重要的作用是加速网络的收敛速度，同时也让网络训练变得更加容易；另外调参过程也简单很多，对于初始化要求没那么高，而且可以使用大的学习率。</p>
+</li>
 </ul>
 <h1>参考文档</h1>
 <ul>
