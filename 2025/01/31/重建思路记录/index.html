@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://fansaorz.github.io/2025/01/31/%E9%87%8D%E5%BB%BA%E6%80%9D%E8%B7%AF%E8%AE%B0%E5%BD%95/dynamic_model.png">
 <meta property="og:image" content="https://fansaorz.github.io/2025/01/31/%E9%87%8D%E5%BB%BA%E6%80%9D%E8%B7%AF%E8%AE%B0%E5%BD%95/dynamic_model_solution.png">
 <meta property="article:published_time" content="2025-01-31T13:56:54.000Z">
-<meta property="article:modified_time" content="2025-02-05T07:46:01.640Z">
+<meta property="article:modified_time" content="2025-02-10T14:45:59.211Z">
 <meta property="article:author" content="Jiashi Zhang">
 <meta property="article:tag" content="视觉重建">
 <meta property="article:tag" content="机器学习">
@@ -246,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          188 字
+          298 字
         
       </span>
     
@@ -257,7 +257,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -295,58 +295,6 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar category-bar" style="margin-right: -1rem">
-    
-
-
-
-
-
-<div class="category-list">
-  
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="个人杂记"
-        id="heading-6512339979b837a2361b9b21cfd920ba" role="tab" data-toggle="collapse" href="#collapse-6512339979b837a2361b9b21cfd920ba"
-        aria-expanded="true"
-      >
-        个人杂记
-        <span class="list-group-count">(1)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse show" id="collapse-6512339979b837a2361b9b21cfd920ba"
-           role="tabpanel" aria-labelledby="heading-6512339979b837a2361b9b21cfd920ba">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2025/01/31/%E9%87%8D%E5%BB%BA%E6%80%9D%E8%B7%AF%E8%AE%B0%E5%BD%95/" title="重建思路记录"
-           class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">重建思路记录</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-</div>
-
-
-  </aside>
-
 
     </div>
 
@@ -384,6 +332,15 @@
 </ul>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2409.12899">LI-GS</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ChenYutongTHU/SplatFormer">SplatFormer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NorthSummer/SliceOcc/tree/master/SliceOcc">SliceOcc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gmh14/tssplat">TetSphere Splatting</a></li>
+<li><a target="_blank" rel="noopener" href="https://zju3dv.github.io/nis_slam/">NIS-SLAM</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lif314/GS3LAM">GS<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow></mrow><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>SLAM</a></li>
+</ul>
+<h1>实时重建思路</h1>
+<ul>
+<li>参考SGS-SLAM方法，在3DGS中引入语义信息，但是删掉代表RGB的sh系数，以加快训练速度？</li>
 </ul>
 
                 
@@ -399,16 +356,6 @@
 
 <span class="category-chains">
   
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%B8%AA%E4%BA%BA%E6%9D%82%E8%AE%B0/" class="category-chain-item">个人杂记</a>
-  
-  
-
-      </span>
-    
   
 </span>
 
@@ -478,29 +425,6 @@
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2025/02/01/CLIP%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="CLIP论文阅读笔记（力大转飞的视觉-文本多模态网络）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CLIP论文阅读笔记（力大转飞的视觉-文本多模态网络）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2025/01/28/High-Quality-Surface-Reconstruction-using-Gaussian-Surfels-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="HQSR-GS阅读笔记（压扁3DGS使其更好重建物体几何信息）">
-                        <span class="hidden-mobile">HQSR-GS阅读笔记（压扁3DGS使其更好重建物体几何信息）</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 
